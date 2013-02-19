@@ -1,3 +1,4 @@
+#coding=utf-8
 # Django settings for zhaopin project.
 import os
 
@@ -13,7 +14,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'zhaopin.sqlite',                      # Or path to database file if using sqlite3.
+        'NAME': 'zhaopin.db',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -46,12 +47,12 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'static').replace('\\','/')
+MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'media/').replace('\\','/')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -146,3 +147,5 @@ LOGGING = {
         },
     }
 }
+#默认登录后的跳转页
+LOGIN_REDIRECT_URL='/'
