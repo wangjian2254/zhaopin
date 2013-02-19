@@ -16,3 +16,13 @@ def jianlilist(request):
     menuitem='jianlilist'
     list=JianLi.objects.filter(user=request.user)
     return render_to_response('jianlilist.html',{'menuitem':menuitem,'list':list},RequestContext(request,{}))
+
+
+
+def addjianli(request):
+    '''
+    添加简历
+    '''
+    menuitem='addjianli'
+
+    return render_to_response('jianli.html',{'menuitem':menuitem},RequestContext(request,{}))

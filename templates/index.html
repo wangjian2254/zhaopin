@@ -1,0 +1,45 @@
+{% extends "basepage/basepage.html" %}
+{% block content %}
+    <div class="con_head">
+        <div class="con_h_left">
+            <div style="width: 100%;font-size: 25px;text-align: left;padding-left: 50px;">
+                寻找工作
+            </div>
+            <div style="width: 100%">
+                <form action="/search" method="post">
+                    <table width="100%" cellpadding="0" cellspacing="0" >
+                        <tr style="height: 35px;">
+                            <td width="80px" style="text-align: right;">
+                                关键字：
+                            </td>
+                            <td width="300px">
+                                <input name="searchValue" type="text" style="width: 280px;height: 25px;line-height: 25px;font-size: 15px;" >
+                            </td>
+                            <td width="55px">
+                                <input type="submit" class="defaultButton" value="搜索">
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="con_h_right">
+            <h2>最近发布的职位</h2>
+
+        </div>
+    </div>
+    <div class="con_center" >
+        <div class="con_c_left">
+            <h1>百年修的同船渡~</h1>
+        </div>
+        <div class="con_c_right">
+            <h2>上班打卡</h2>
+
+        </div>
+    </div>
+
+
+{% endblock  %}

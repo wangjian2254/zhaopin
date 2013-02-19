@@ -1,0 +1,12 @@
+<div id="top">
+<div style="float: left;padding-left: 50px;">
+    <a href="/"  class="topfont">首页</a>
+</div>
+    {% if user.is_authenticated %}
+        <span class="topfont">{{ user.username }}</span>&nbsp;<span class="topfont">|</span>&nbsp;<a href="/jianlilist"  class="topfont">简历管理</a>&nbsp;<span class="topfont">|</span>&nbsp;<a href="/accounts/login/"  class="topfont">发布职位</a>&nbsp;<span class="topfont">|</span>&nbsp;<a href="/accounts/logout/"  class="topfont">退出</a>&nbsp;&nbsp;
+    {% else %}
+        <a href="/accounts/login/"  class="topfont">登录</a>&nbsp;<span class="topfont">|</span>&nbsp;<a href="/Reg"  class="topfont">注册</a>
+    {% endif %}
+&nbsp;&nbsp;&nbsp;
+</div>
+<div id="top_tihuan"></div>

@@ -1,0 +1,53 @@
+{% extends "basepage/basepage.html" %}
+{% block content %}
+    <div class="con_head">
+        <form action="/accounts/login/" method="post">
+        <div class="con_h_left" >
+            <div style="width: 100%;text-align: left;">
+                <span class="loginh1">登录</span>
+            </div>
+                    <table cellpadding="0" cellspacing="0" width="100%">
+                        {% if form.errors %}
+                            <tr>
+                                <td colspan="2" style="text-align: center;padding-left: 40px;">
+                                    <span style="color: red;">
+                                        {% for err in form.errors.values %}
+                                            {{ err }}
+                                        {% endfor  %}
+                                        </span>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <td  class="login" >电子邮箱：</td>
+                            <td class="loginLeft"><input type="text" name="username" class="loginInput" value=""></td>
+                        </tr>
+                        <tr>
+                            <td class="login">密码：</td>
+                            <td class="loginLeft"><input type="password" name="password"  class="loginInput" value=""></td>
+                        </tr>
+                        <tr>
+                            <td class="loginCenter" colspan="2"><input type="checkbox" name="sign" value="Y" checked="checked"> 一周内自动登录</td>
+                        </tr>
+                        <tr>
+                            <td class="loginCenter" colspan="2"><input type="submit" value="登录" class="defaultButton" > <input type="reset" value="清空"  class="defaultButton" >{% csrf_token %}</td>
+                        </tr>
+                    </table>
+        </div>
+        </form>
+        <div class="con_h_right">
+            <div style="height: 30px;"></div>
+            <div style="text-align: left;padding-left: 20px;" >
+                <p>&gt; 没有账号？ <a href="/Reg">注册</a>一个吧！</p>
+                <p>&gt; <a href="#">新浪微博账号登录</a></p>
+                <p>&gt; <a href="#">腾讯微博账号登录</a></p>
+                <p>&gt; <a href="#">网易微博账号登录</a></p>
+                <p>&gt; <a href="#">QQ微博账号登录</a></p>
+            </div>
+
+        </div>
+    </div>
+
+
+
+{% endblock  %}
