@@ -139,3 +139,12 @@ p{
     vertical-align: middle;
 
 }
+#jianli_table tr{
+    height: 35px;
+}
+#jianli_table td{
+    padding-right: 10px;
+}
+#jianli_table input{
+    width: 250px;
+}
