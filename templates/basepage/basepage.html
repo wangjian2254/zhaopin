@@ -16,14 +16,21 @@
 {#            <link href="/media/jquery/css/register.css" rel="stylesheet" type="text/css"/>#}
         {% endif %}
         <link href="/media/css/default.css" rel="stylesheet" type="text/css">
+        <link href="/media/css/style.css" rel="stylesheet" type="text/css">
     {% endblock  %}
     {% block basejs %}
         {% if session_user %}
         {% else %}
 {#            <script src="/media/jquery/jquery-1.7.2.min.js"></script>#}
 {#            <script src="/media/jquery/jquery-ui-1.8.20.custom.min.js"></script>#}
-{#            <script src="/media/jquery/view/jsajax.js"></script>#}
-{#            <script src="/media/jquery/view/register.js"></script>#}
+            <script src="/media/js/jquery.js"></script>
+            <script type="text/javascript">
+                var $j = jQuery.noConflict();
+            </script>
+            <script src="/media/js/json2.js"></script>
+            <script src="/media/js/val.js"></script>
+            <script src="/media/js/artDialog.source.js?skin=blue"></script>
+            <script src="/media/Datepicker4.6/WdatePicker.js"></script>
         {% endif %}
     {% endblock  %}
 </head>

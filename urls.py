@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     # url(r'^zhaopin/', include('zhaopin.foo.urls')),
     (r'^Reg/$',reg),
     (r'^Reg2/$',reg2),
-    (r'^accounts/login/$',login,{'template_name':'login.html','redirect_field_name':'/'}),
+    (r'^accounts/login/$',login,{'template_name':'login1.html','redirect_field_name':'/'}),
     (r'^accounts/logout/$', logout,{'template_name':'logout.html'}),
     (r'^accounts/profile/$',index),
     # Uncomment the admin/doc line below to enable admin documentation:

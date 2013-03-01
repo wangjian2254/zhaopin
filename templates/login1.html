@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>登录</title>
+    <link href="/media/css/default.css" rel="stylesheet" type="text/css">
+    <link type="text/css" href="/media/css/loginStyle.css" rel="stylesheet" />
+    	 <script type="text/javascript">
+
+
+    	 	document.onkeydown=function(e){
+    			if(!e)e=window.event;
+    			if((e.keyCode || e.which)==13){
+    				loginIn();
+    			}
+    		}
+
+    	 	function loginIn(){
+                	document.getElementById('szht_auth_login').submit();
+
+    	 	}
+    	 </script>
+</head>
+<body class="login_bg">
+{% include "include/top.html" %}
+
+<div class="login_box">
+		<div class="logo">
+            <span style="vertical-align: middle;line-height: 61px;">网络人才招聘系统</span>
+		</div>
+	<table class="form_table"  border="0" cellspacing="0" cellpadding="0">
+		<tr><td height="0"></td></tr>
+		<tr>
+			<td height="100%" align="center" valign="middle" >
+				<div class="szht_login">
+					<form id="szht_auth_login" action="/accounts/login/" method="post">
+                            <table border="0" cellspacing="0" cellpadding="0" style="margin-top:20px;">
+
+								<tr>
+									<td height = "47px" valign="center">账号</td>
+									<td height = "47px" valign="center"><input type = "text" name="username" style="width:200px" class = "text_input"></td>
+								</tr>
+								<tr>
+									<td height = "47px" valign="center">密码</td>
+									<td height = "47px" valign="center"><input type = "password" name="password" style="width:200px"  class = "text_input"></td>
+									<input type="hidden" name="from" value="" >
+									<input type="hidden" id="loginIp" name="loginIp" value="69.16.97.123" >
+								</tr>
+								<tr>
+									<td></td>
+									<td height = "55px" valign="center" align = "left">{% csrf_token %}
+										<a href = "#" class="btn" onClick="loginIn()">登录</a>
+									</td>
+								</tr>
+
+                                {% if form.errors %}
+                                   <tr>
+                                       <td colspan="2" height = "47px" valign="center" style="text-align: center;padding-left: 40px;">
+                                           <span style="color: red;">
+                                               {% for err in form.errors.values %}
+                                                   {{ err }}
+                                               {% endfor  %}
+                                               </span>
+                                       </td>
+                                   </tr>
+                               {% endif %}
+							</table>
+					</form>
+				</div>
+			</td>
+		</tr>
+		<tr><td height="0"></td></tr>
+	</table>
+</div>
+<div  style="height:32px; line-height:32px; text-align:center;">
+            Copyright @ 2011-2012
+</div>
+<div style="display:none"></div>
+</body>
+</html>

@@ -1,61 +1,68 @@
 {% extends "basepage/basepage.html" %}
 {% block content %}
-
+<script type="text/javascript">
+    function submitForm(){
+        if(!valSubmit()){
+            return;
+            }
+        $j("#form1")[0].submit();
+    }
+</script>
     <div class="con_center" >
-        <table id="jianli_table" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <table id="jianli_table" class="table0 bigtable" width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr >
-                <td align="center">
+                <td align="left" colspan="4">
                     新建简历
                 </td>
             </tr>
             <tr>
                 <td align="right">
-                    简历名称:
+                    <span class="red_star">*</span>简历名称:
                 </td>
                 <td colspan="3">
-                    <input type="text" name="name" >
+                    <input type="text" name="name"  val="{'required':true,'title':'简历名称'}" value="">
                 </td>
             </tr>
             <tr>
                 <td align="right">
-                    姓名:
+                    <span class="red_star">*</span> 姓名:
                 </td>
                 <td align="left">
-                    <input type="text" name="username" >
+                    <input type="text" name="username"  val="{'required':true,'title':'姓名'}" value="">
                 </td>
                 <td align="right">
-                    性别:
+                    <span class="red_star">*</span>性别:
                 </td>
                 <td align="left">
-                    <input type="radio" name="sex" value="1" checked="checked" >男 <input type="radio" name="sex" value="0"> 女
+                    <input type="radio" name="sex" value="1" checked="checked" style="width: 30px;" >男 <input type="radio" name="sex" value="0"  style="width: 30px;"> 女
                 </td>
             </tr>
             <tr>
                 <td align="right">
-                    出生日期:
+                    <span class="red_star">*</span>出生日期:
                 </td>
                 <td align="left">
-                    <input type="text" name="age" >
+                    <input type="text" name="age" val="{'required':true,'title':'出生日期'}"   class="text Wdate"  style="border:#CCC solid 1px;float:center;height:25px;" readonly="readonly"   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,skin:'blueFresh'})">
                 </td>
                 <td align="right">
-                    工作年龄:
+                    <span class="red_star">*</span>工作年龄:
                 </td>
                 <td align="left">
-                    <input type="text" name="workage" >
+                    <input type="text" name="workage"  val="{'required':true,'type':'int','min':0,'title':'工作年龄'}" value="">
                 </td>
             </tr>
             <tr>
                 <td align="right">
-                    专业:
+                    <span class="red_star">*</span>专业:
                 </td>
                 <td align="left">
-                    <input type="text" name="zhuanye" >
+                    <input type="text" name="zhuanye"  val="{'required':true,'title':'专业'}" value="">
                 </td>
                 <td align="right">
-                    民族:
+                    <span class="red_star">*</span>民族:
                 </td>
                 <td align="left">
-                    <input type="text" name="minzu" >
+                    <input type="text" name="minzu"  val="{'required':true,'title':'民族'}" value="">
                 </td>
             </tr>
             <tr>
@@ -66,27 +73,27 @@
                     <input type="text" name="tel" >
                 </td>
                 <td align="right">
-                    电子邮件:
+                    <span class="red_star">*</span>电子邮件:
                 </td>
                 <td align="left">
-                    <input type="text" name="email" >
+                    <input type="text" name="email"  val="{'required':true,'title':'电子邮件'}" value="">
                 </td>
             </tr>
             <tr>
                 <td align="right">
                     自我描述：
                 </td>
-                <td align="right">
+                <td align="left" colspan="3">
+                    <textarea rows="15"  name="desc"  style="width: 75%;">
+
+                                        </textarea>
                 </td>
 
             </tr>
             <tr>
-                <td align="right">
-                                </td>
-                <td colspan="3">
-                    <textarea rows="15"  name="desc"  style="width: 75%;">
+                <td align="center" colspan="4">
+                 <input type="button" style="width: 100px;" value="保存" onclick="submitForm()">
 
-                    </textarea>
                 </td>
 
             </tr>

@@ -1,0 +1,100 @@
+/* BEGIN 整体 */
+* { 	
+	color:#333333;
+	margin:0;
+	padding:0;
+	font-size:12px;
+}
+
+img{
+    border:0;
+}
+
+li{
+list-style-type:none;
+}
+
+
+a,a:link,a:visited {
+	text-decoration: none;
+}
+
+a:hover,a:active {
+	
+}
+/* END 整体 */
+
+
+/* BEGIN 登录2 */
+
+.login_bg{
+	background:#6db0e7 url(../images/main/loginbg.jpg) repeat-x 0px 150px;
+	text-align:center;
+}
+
+.login_box{
+	text-align:center;
+	width:476px;
+	height:410px;
+	margin:190px auto 0px auto;
+	background:url(../images/main/login_box_bg.jpg) no-repeat 0px 0px;
+}
+
+.login_box .logo{
+	width:476px;
+	height:61px;
+	background:url(../images/main/login_logo.jpg) no-repeat 30px 11px;
+}
+
+.login_box .form_table{
+	margin:20px auto 0px auto
+}
+
+.login_box .form_table td{
+	color:#fff;	
+}
+
+.login_box .form_table td .btn{
+	display:block inline;
+	width:87px;
+	height:29px;
+	line-height:29px;
+	color:#fff;
+	text-align:center;
+	background:url(../images/main/login_btn2.gif) repeat-x 0px 0px;
+	float:left;
+	font-weight:bold;
+	font-size:13px;
+	margin-left:10px;
+}
+
+.login_box .form_table td .link{
+	line-height:29px;
+	margin-left:8px;
+	color:#fff;
+}
+
+.login_box .form_table .text_input{
+	border:1px solid #0d4a84;
+	background:#cde6ff;
+	height:24px;
+	margin-left:10px;
+	line-height:24px;
+	
+}
+
+
+/* END 登录2 */
+
+
+
+
+
+
+
+
+
+
+
+
+
