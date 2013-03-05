@@ -65,18 +65,32 @@ border-right:1px solid #c5c5c5;
 border-bottom:1px solid #c5c5c5;
 }
 .table0{
+margin-top:0px;
+margin-bottom:0px;
+}
+.tablemargin{
 margin-top:10px;
 margin-bottom:5px;
 }
+.tdpadding td{
+    padding:5px 10px;
+}
+.table1{
+border-top:1px solid #c5c5c5;
+border-left:1px solid #c5c5c5;
+border-right:1px solid #c5c5c5;
+height:26px;
+line-height:26px;
+font-size:12px;
+}
 .table0 td{
+border-top:1px solid #c5c5c5;
 border-left:1px solid #c5c5c5;
 border-right:1px solid #c5c5c5;
 border-bottom:1px solid #c5c5c5;
 height:26px;
 line-height:26px;
 font-size:12px;
-padding:5px 10px;
-background:#fcfcfc;
 }
 
 .table0 td input{
@@ -361,3 +375,7 @@ empty-cells: show;
 	text-decoration: underline;
 	cursor: pointer;
 }
+
+ .btn a{
+		text-decoration: underline;
+	}

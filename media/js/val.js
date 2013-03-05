@@ -32,3 +32,40 @@ function valSubmit(formid){
 	}
 	return true;
 }
+
+function result_alert2(type,content)
+{
+    switch (type)
+    {
+        case "success":
+	        {
+	        	art.dialog({title:'提示',content:content,icon:'succeed',lock: true,ok:true});
+	        }
+	        break;
+        case "warn":
+            {
+           	 art.dialog({title:'提示',content:content,icon:'warning',lock: true,ok:true});
+        	}
+            break;
+     }
+}
+function confirm_alert2(type,content,url)
+{
+    switch (type)
+    {
+        case "success":
+	        {
+	        	art.dialog({title:'提示',content:content,icon:'succeed',lock: true,cancel:true,ok:function(){
+                    window.location.href=url;
+                }});
+	        }
+	        break;
+        case "warn":
+            {
+           	 art.dialog({title:'提示',content:content,icon:'warning',lock: true,cancel:true,ok:function(){
+           	                     window.location.href=url;
+           	                 }});
+        	}
+            break;
+     }
+}

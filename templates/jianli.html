@@ -7,12 +7,16 @@
             }
         $j("#form1")[0].submit();
     }
+$j(function(){
+    result_alert2('{{ result }}','{{ msg }}');
+});
 </script>
     <div class="con_center" >
-        <table id="jianli_table" class="table0 bigtable" width="100%" cellpadding="0" cellspacing="0" border="0">
+    <form id="form1" action="/savejianli" method="post">
+        <table id="jianli_table" class="table0 bigtable tdpadding tablemargin" width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr >
                 <td align="left" colspan="4">
-                    新建简历
+                    <b>{% if not jianli.id %}新建简历{% else %}修改简历{% endif %}</b><input type="hidden" name="id" value="{{ jianli.id|default_if_none:"" }}">
                 </td>
             </tr>
             <tr>
@@ -20,7 +24,7 @@
                     <span class="red_star">*</span>简历名称:
                 </td>
                 <td colspan="3">
-                    <input type="text" name="name"  val="{'required':true,'title':'简历名称'}" value="">
+                    <input type="text" name="name"  val="{'required':true,'title':'简历名称'}" value="{{ jianli.name|default_if_none:"" }}">
                 </td>
             </tr>
             <tr>
@@ -28,13 +32,13 @@
                     <span class="red_star">*</span> 姓名:
                 </td>
                 <td align="left">
-                    <input type="text" name="username"  val="{'required':true,'title':'姓名'}" value="">
+                    <input type="text" name="username"  val="{'required':true,'title':'姓名'}" value="{{ jianli.username|default_if_none:"" }}">
                 </td>
                 <td align="right">
                     <span class="red_star">*</span>性别:
                 </td>
                 <td align="left">
-                    <input type="radio" name="sex" value="1" checked="checked" style="width: 30px;" >男 <input type="radio" name="sex" value="0"  style="width: 30px;"> 女
+                    <input type="radio" name="sex" value="1"  {% if jianli.sex  %} checked="checked" {% endif %} style="width: 30px;" >男 <input type="radio" name="sex" value="0"  {% if not jianli.sex  %} checked="checked" {% endif %}  style="width: 30px;"> 女
                 </td>
             </tr>
             <tr>
@@ -42,13 +46,13 @@
                     <span class="red_star">*</span>出生日期:
                 </td>
                 <td align="left">
-                    <input type="text" name="age" val="{'required':true,'title':'出生日期'}"   class="text Wdate"  style="border:#CCC solid 1px;float:center;height:25px;" readonly="readonly"   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,skin:'blueFresh'})">
+                    <input type="text" name="age" val="{'required':true,'title':'出生日期'}" value="{{ jianli.age|date:"Y-m-d"  }}"  class="text Wdate"  style="border:#CCC solid 1px;float:center;height:25px;" readonly="readonly"   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,skin:'blueFresh'})">
                 </td>
                 <td align="right">
                     <span class="red_star">*</span>工作年龄:
                 </td>
                 <td align="left">
-                    <input type="text" name="workage"  val="{'required':true,'type':'int','min':0,'title':'工作年龄'}" value="">
+                    <input type="text" name="workage"  val="{'required':true,'type':'int','min':0,'title':'工作年龄'}" value="{{ jianli.workage|default_if_none:"" }}">
                 </td>
             </tr>
             <tr>
@@ -56,13 +60,13 @@
                     <span class="red_star">*</span>专业:
                 </td>
                 <td align="left">
-                    <input type="text" name="zhuanye"  val="{'required':true,'title':'专业'}" value="">
+                    <input type="text" name="zhuanye"  val="{'required':true,'title':'专业'}" value="{{ jianli.zhuanye|default_if_none:"" }}">
                 </td>
                 <td align="right">
                     <span class="red_star">*</span>民族:
                 </td>
                 <td align="left">
-                    <input type="text" name="minzu"  val="{'required':true,'title':'民族'}" value="">
+                    <input type="text" name="minzu"  val="{'required':true,'title':'民族'}" value="{{ jianli.minzu|default_if_none:"" }}">
                 </td>
             </tr>
             <tr>
@@ -70,13 +74,13 @@
                     手机号:
                 </td>
                 <td align="left">
-                    <input type="text" name="tel" >
+                    <input type="text" name="tel" value="{{ jianli.tel|default_if_none:"" }}">
                 </td>
                 <td align="right">
                     <span class="red_star">*</span>电子邮件:
                 </td>
                 <td align="left">
-                    <input type="text" name="email"  val="{'required':true,'title':'电子邮件'}" value="">
+                    <input type="text" name="email"  val="{'required':true,'title':'电子邮件'}" value="{{ jianli.email|default_if_none:"" }}">
                 </td>
             </tr>
             <tr>
@@ -84,20 +88,74 @@
                     自我描述：
                 </td>
                 <td align="left" colspan="3">
-                    <textarea rows="15"  name="desc"  style="width: 75%;">
-
-                                        </textarea>
+                    <textarea rows="15"  name="desc"  style="width: 75%;">{{ jianli.desc|default_if_none:"" }}</textarea>
                 </td>
 
             </tr>
+            <tr >
+                   <td align="left" colspan="4">
+                       <b>教育经历</b>
+                   </td>
+               </tr>
+            <tr >
+                <td align="left">
+                    年度:
+                </td>
+                <td align="left" colspan="3">
+                    地点:
+                </td>
+
+            </tr>
+        {% for jiaoyu in jiaoyulist %}
+            <tr >
+                <td align="center">
+                    <input type="text" name="jiaoyudateqj{{ forloop.counter0 }}" style="width: 80%;" value="{{ jiaoyu.dateqj|default_if_none:"" }}"><input type="hidden" name="jiaoyuindex{{ forloop.counter0 }}" value="{{ forloop.counter0 }}"><input type="hidden" name="jiaoyuid{{ forloop.counter0 }}" value="{{ jiaoyu.id|default_if_none:"" }}">
+                </td>
+                <td align="left" colspan="3">
+                    <textarea rows="3"  name="jiaoyuworkcontent{{ forloop.counter0 }}"  style="width: 75%;">{{ jiaoyu.workcontent|default_if_none:"" }}</textarea>
+                </td>
+            </tr>
+        {% endfor %}
+            <tr >
+                   <td align="left" colspan="4">
+                       <b>工作经历</b>
+                   </td>
+               </tr>
+            <tr >
+                <td align="left">
+                    年度:
+                </td>
+                <td align="left">
+                    公司名称:
+                </td>
+                <td align="left" colspan="3">
+                    工作内容:
+                </td>
+            </tr>
+        {% for jiaoyu in worklist %}
+            <tr >
+                <td align="center">
+                    <input type="text" name="workdateqj{{ forloop.counter0 }}" style="width: 80%;" value="{{ jiaoyu.dateqj|default_if_none:"" }}"><input type="hidden" name="workindex{{ forloop.counter0 }}" value="{{ forloop.counter0 }}"><input type="hidden" name="workid{{ forloop.counter0 }}" value="{{ jiaoyu.id|default_if_none:"" }}">
+                </td>
+                <td align="center">
+                    <input type="text" name="workworkname{{ forloop.counter0 }}" style="width: 80%;" value="{{ jiaoyu.workname|default_if_none:"" }}">
+                </td>
+                <td align="left" colspan="3">
+                    <textarea rows="6"  name="workworkcontent{{ forloop.counter0 }}"  style="width: 90%;">{{ jiaoyu.workcontent|default_if_none:"" }}</textarea>
+                </td>
+            </tr>
+        {% endfor %}
+
+
             <tr>
                 <td align="center" colspan="4">
-                 <input type="button" style="width: 100px;" value="保存" onclick="submitForm()">
+                 <input type="button" style="width: 100px;" value="保存" onclick="submitForm()">{% csrf_token %}
 
                 </td>
 
             </tr>
         </table>
+    </form>
     </div>
 
 

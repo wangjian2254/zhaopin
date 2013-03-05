@@ -36,6 +36,13 @@ class JianLi(models.Model):#简历
     tel=models.CharField(max_length=11,verbose_name=u'联系方式，手机')
     email=models.EmailField(verbose_name=u'电子邮件')
     desc=models.CharField(max_length=500,verbose_name=u'自我描述')
+    looknum=models.IntegerField(default=0,verbose_name=u'被浏览次数')
+    ispub=models.BooleanField(default=True,verbose_name=u'是否公开')
+
+class LookRecord(models.Model):
+    jianli=models.ForeignKey(JianLi)
+    user=models.ForeignKey(User,verbose_name=u'浏览者')
+    updatetime=models.DateTimeField(auto_created=True)
 
 class JiaoYu(models.Model):
     '''
@@ -53,6 +60,7 @@ class WorkJingYan(models.Model):
     jianli=models.ForeignKey(JianLi)
     index=models.IntegerField(default=0,verbose_name=u'排序',help_text=u'')
     dateqj=models.CharField(max_length=30,verbose_name=u'日期区间',help_text=u'工作开始和结束的日期')
+    workname=models.CharField(max_length=30,verbose_name=u'公司名称',help_text=u'公司名称')
     workcontent=models.CharField(max_length=200,verbose_name=u'工作内容',help_text=u'工作的描述')
 
 class ZhiWei(models.Model):

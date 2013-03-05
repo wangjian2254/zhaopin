@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.contrib.auth.views import login, logout
 from pin.loginviews import reg, reg2
 from zhaopin import settings
-from zhaopin.pin.views import index,jianlilist,addjianli
+from zhaopin.pin.views import index,jianlilist,addjianli,savejianli,pubjianli,lookjianli
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -13,6 +13,9 @@ urlpatterns = patterns('',
     (r'^$', index),
     (r'^jianlilist$', jianlilist),
     (r'^addjianli', addjianli),
+    (r'^pubjianli', pubjianli),
+    (r'^lookjianli', lookjianli),
+    (r'^savejianli', savejianli),
     # url(r'^zhaopin/', include('zhaopin.foo.urls')),
     (r'^Reg/$',reg),
     (r'^Reg2/$',reg2),

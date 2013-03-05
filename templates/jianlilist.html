@@ -1,41 +1,72 @@
 {% extends "basepage/basepage.html" %}
 {% block content %}
-
+<script type="text/javascript">
+    $j(function(){
+        result_alert2('{{ result }}','{{ msg }}');
+    });
+</script>
     <div class="con_center" >
-        <div class="con_c_menu_left">
-            {% include 'include/jianlimenu.html' %}
-        </div>
-        <div class="con_c_menu_right">
-            <h2>简历管理/简历列表</h2>
+
             <div style="width: 100%;">
-            <table style="width: 100%;" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                    <td width="50px" align="center">
+            <table class="tablemargin" width="100%" height="100%" border="0" cellspacing="0"
+                			cellpadding="0">
+            <tr>
+                <td height="32" class="table1">
+                    <div class="content_title">
+                        <span> <b>简历管理/简历列表</b></span>
+                        <div class="title_form600">
+                            <a href="/addjianli" target="_blank" class="add_btn"
+                                onmouseover="this.style.backgroundPosition='0 -21px'"
+                                onmouseout="this.style.backgroundPosition='0 0'"
+                                onmousedown="this.style.backgroundPosition='0 -42px'"
+                                onmouseup="this.style.backgroundPosition='0 -21px'"><img
+                                    src="/media/images/tab_2_2.gif" />
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td valign="top">
+            <table id="jianlilist" class="table0 tdpadding" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr >
+                <td width="50px" align="center"  >
                         序号
                     </td>
-                    <td align="center">
+                    <td align="center" >
                         简历名称
                     </td>
-                    <td width="80px" align="center">
+                    <td width="100px" align="center" >
                         最后修改日期
                     </td>
-                    <td width="80px" align="center">
+                    <td width="80px" align="center" >
+                        被浏览次数
+                    </td>
+                    <td width="80px" align="center" >
+                        状态
+                    </td>
+                    <td width="180px" align="center" >
                         操作
                     </td>
                 </tr>
                 {% for jianli in list %}
                 <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td><a href="/updatejianli?jianli_id={{ jianli.pk }}">{{ jianli.name }}</a></td>
-                    <td>{{ jianli.updatetime|date:"Y-m-d H:M:S" }}</td>
-                    <td><a href="/updatejianli?jianli_id={{ jianli.pk }}">修改</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/deljianli?jianli_id={{ jianli.pk }}">删除</a></td>
+                    <td align="center" >{{ forloop.counter }}</td>
+                    <td><a href="/lookjianli?jianli_id={{ jianli.pk }}">{{ jianli.name }}</a></td>
+                    <td align="center" >{{ jianli.updatetime|date:"Y-m-d" }}</td>
+                    <td align="center" >{{ jianli.looknum }}</td>
+                    <td align="center"class="btn" ><a href="#"  onclick="confirm_alert2('warn','要设为：{% if jianli.ispub %}不公开{% else %}公开{% endif %} ?','/pubjianli?jianli_id={{ jianli.pk }}')">{% if jianli.ispub %}公开{% else %}不公开{% endif %}</a></td>
+                    <td align="center" class="btn" ><a href="#"  onclick="confirm_alert2('warn','要修改简历：{{ jianli.name }} ?','/addjianli?jianli_id={{ jianli.pk }}')">修改</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#" onclick="confirm_alert2('warn','要删除简历：{{ jianli.name }} ?','/deljianli?jianli_id={{ jianli.pk }}')">删除</a></td>
                 </tr>
                 {% endfor %}
             </table>
-
+            </td>
+            </tr>
+            </table>
             </div>
-        </div>
     </div>
-
-
+<script type="text/javascript">
+    senfe("jianlilist","#f6f6f6","#fff","#d9ebf5","#aed6fc");
+</script>
 {% endblock  %}
