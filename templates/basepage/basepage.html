@@ -37,9 +37,13 @@
     {% endblock  %}
 </head>
 <body class="div_c">
-{% include "include/top.html" %}
+{% block content_top %}
+    {% include "include/top.html" %}
+{% endblock  %}
 {% block content %}
 {% endblock  %}
-{% include "include/bottom.html" %}
+{% block content_bottom %}
+    {% include "include/bottom.html" %}
+{% endblock  %}
 </body>
 </html>

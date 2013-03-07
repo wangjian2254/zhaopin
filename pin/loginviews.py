@@ -3,8 +3,10 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
+from django.contrib.auth import  login as auth_login, authenticate
+from pin.models import Person
 
-__author__ = '王健'
+__author__ = '张藐方'
 
 
 
@@ -15,6 +17,7 @@ def reg2(request):
     username=request.POST.get('username','')
     password=request.POST.get('password','')
     r_password=request.POST.get('r_password','')
+    type=request.POST.get('type','')
     fail_dict= {'msg': '', 'username': username}
     if username and password and r_password:
         if len(password)<6:
@@ -31,6 +34,11 @@ def reg2(request):
                 user.is_active=True
                 user.email=username
                 user.save()
+                person=Person()
+                person.user=user
+                person.type=int(type)
+                person.save()
+                auth_login(request,authenticate(username=user.username,password=password))
                 return render_to_response('reg_success.html',{'msg':u'注册成功'},RequestContext(request,{}))
         else:
             fail_dict['msg']=u'密码与确认密码不一致'

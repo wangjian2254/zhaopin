@@ -17,6 +17,12 @@ $j(function(){
             <tr >
                 <td align="left" colspan="4">
                     <b>{% if not jianli.id %}新建简历{% else %}修改简历{% endif %}</b><input type="hidden" name="id" value="{{ jianli.id|default_if_none:"" }}">
+                    <a href="/jianlilist"  style="float: right;" ><div class="btn_style1"
+                                                 style="background:url(/media/images/btn_mod.gif) no-repeat 0 0;"
+                                                 onmouseover="this.style.backgroundPosition='0 -24px'"
+                                                 onmouseout="this.style.backgroundPosition='0 0'"
+                                                 onmousedown="this.style.backgroundPosition='0 -48px'"
+                                                 onmouseup="this.style.backgroundPosition='0 -24px'">简历列表</div></a>
                 </td>
             </tr>
             <tr>

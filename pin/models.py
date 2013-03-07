@@ -69,10 +69,23 @@ class ZhiWei(models.Model):
     zhiwei=models.CharField(max_length=20,verbose_name=u'工作职位',help_text=u'提供的工作职位')
     xingzhi=models.CharField(max_length=10,verbose_name=u'工作性质',help_text=u'工作的性质，兼职、全职')
     num=models.IntegerField(verbose_name=u'需要人数',help_text=u'该职位需要招聘的人数')
+    workage=models.IntegerField(verbose_name=u'最低工作年龄',help_text=u'该职位需要最低工作年龄')
     price1=models.IntegerField(verbose_name=u'薪水范围起',blank=True,null=True,help_text=u'提供的薪水范围')
     price2=models.IntegerField(verbose_name=u'薪水范围止',blank=True,null=True,help_text=u'提供的薪水范围')
+    desc=models.CharField(max_length=500,verbose_name=u'自我描述')
+    looknum=models.IntegerField(default=0,verbose_name=u'被浏览次数')
+    ispub=models.BooleanField(default=True,verbose_name=u'是否公开')
+    updatetime=models.DateTimeField(auto_now=True,verbose_name=u'最后修改时间')
+
+
+class WorkLookRecord(models.Model):
+    zhiwei=models.ForeignKey(ZhiWei)
+    user=models.ForeignKey(User,verbose_name=u'浏览者')
+    updatetime=models.DateTimeField(auto_created=True)
 
 
 
+class Column(models.Model):
+    name=models.CharField(max_length=10,verbose_name=u'栏目名称')
 
 

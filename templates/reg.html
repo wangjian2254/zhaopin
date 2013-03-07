@@ -7,13 +7,13 @@
                 <span class="loginh1">注册</span>
             </div>
                     <table cellpadding="0" cellspacing="0" width="100%">
-                        {% if msg %}
-                            <tr>
+                        <tr>
                                 <td colspan="3" style="text-align: center;padding-left: 40px;">
-                                    <span style="color: red;">{{ msg }}</span>
+                                    &nbsp;{% if msg %}
+                                        <span style="color: red;">{{ msg }}</span>
+                                    {% endif %}
                                 </td>
-                            </tr>
-                        {% endif %}
+                        </tr>
                         <tr>
                             <td  class="login" >电子邮箱：</td>
                             <td class="loginLeft"><input type="text" name="username" class="loginInput" value="{{ username }}"></td>
@@ -29,11 +29,17 @@
                             <td class="loginLeft"><input type="password" name="r_password"  class="loginInput" value=""></td>
                             <td  class="login" ></td>
                         </tr>
+                        <tr>
+                            <td class="login">注册类型：</td>
+                            <td class="loginLeft"><input type="radio" name="type"   value="1" checked="checked"> 个人用户<input type="radio" name="type"   value="2" > 企业用户</td>
+                            <td  class="login" ></td>
+                        </tr>
 
                         <tr>
                             <td class="loginCenter" colspan="3"><input type="submit" value="注册"  class="defaultButton" > <input type="reset" value="清空" class="defaultButton" >{% csrf_token %}</td>
                         </tr>
                     </table>
+
         </div>
         </form>
         <div class="con_h_right">

@@ -13,129 +13,133 @@ $j(function(){
         <table id="jianli_table" class="table0 bigtable tdpadding tablemargin" width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr >
                 <td align="left" colspan="4">
-                    <b>{{ jianli.name|default_if_none:"" }}</b><input type="hidden" name="id" value="{{ jianli.id|default_if_none:"" }}">
+                    <b>职位信息</b><input type="hidden" name="id" value="{{ work.id|default_if_none:"" }}">
                     <div style="float: right;margin-right: 10px;"><input type="button" style="width: 100px;" value="分享到微博" onclick="fenxiang()" ></div>
                 </td>
             </tr>
             
             <tr>
                 <td align="right">
-                     姓名:
+                     职位名称:
+                </td>
+                <td align="left" colspan="3">
+                    {{ work.zhiwei|default_if_none:"" }}
+                </td>
+
+            </tr>
+            <tr>
+                <td align="right">
+                     公司名称:
                 </td>
                 <td align="left">
-                    {{ jianli.username|default_if_none:"" }}
+                    {{ work.user.business.name|default_if_none:"" }}
                 </td>
                 <td align="right">
-                    性别:
+                    招聘数量:
                 </td>
                 <td align="left">
-                    {% if jianli.sex  %} 男{% else %}女{% endif %}
+                    {{ work.num }}人
                 </td>
             </tr>
             <tr>
                 <td align="right">
-                    出生日期:
+                    工作地点:
                 </td>
                 <td align="left">
-                    {{ jianli.age|date:"Y-m-d"  }}
+                    {{ work.workadd  }}
                 </td>
                 <td align="right">
                     工作年龄:
                 </td>
                 <td align="left">
-                    {{ jianli.workage|default_if_none:"" }}
+                    {{ work.workage|default_if_none:"" }}
                 </td>
             </tr>
             <tr>
                 <td align="right">
-                    专业:
+                    工作性质:
                 </td>
                 <td align="left">
-                    {{ jianli.zhuanye|default_if_none:"" }}
+                    {% ifequal work.xingzhi "qz" %}全职{% endifequal %}
+                    {% ifequal work.xingzhi "jz" %}兼职{% endifequal %}
+                    {% if not work.xingzhi  %}兼职{% endif %}
                 </td>
                 <td align="right">
-                    民族:
+                    薪资:
                 </td>
                 <td align="left">
-                    {{ jianli.minzu|default_if_none:"" }}
+                    {% if not work.price1 and not work.price2 %}面议{% else %}{{ work.price1 }}~{{ work.price2 }}元{% endif %}
                 </td>
             </tr>
             <tr>
                 <td align="right">
-                    手机号:
+                    最后修改日期:
                 </td>
                 <td align="left">
-                    {{ jianli.tel|default_if_none:"" }}
+                    {{ work.updatetime|date:"Y-m-d"  }}
                 </td>
                 <td align="right">
-                    电子邮件:
+                    查看次数:
                 </td>
                 <td align="left">
-                    {{ jianli.email|default_if_none:"" }}
+                    {{ work.looknum|default_if_none:"0" }}
                 </td>
             </tr>
             <tr>
                 <td align="right">
-                    自我描述：
+                    职位描述：
                 </td>
                 <td align="left" colspan="3">
-                    {{ jianli.desc|default_if_none:"" }}
+                    {{ work.desc|default_if_none:"" }}
                 </td>
 
             </tr>
             <tr >
-                   <td align="left" colspan="4">
-                       <b>教育经历</b>
-                   </td>
-               </tr>
-            <tr >
-                <td align="left">
-                    年度:
-                </td>
-                <td align="left" colspan="3">
-                    地点:
-                </td>
-
-            </tr>
-        {% for jiaoyu in jiaoyulist %}
-            <tr >
-                <td align="center">
-                    {{ jiaoyu.dateqj|default_if_none:"" }}
-                </td>
-                <td align="left" colspan="3">
-                    {{ jiaoyu.workcontent|default_if_none:"" }}
-                </td>
-            </tr>
-        {% endfor %}
-            <tr >
-                   <td align="left" colspan="4">
-                       <b>工作经历</b>
-                   </td>
-               </tr>
-            <tr >
-                <td align="left">
-                    年度:
-                </td>
-                <td align="left">
+               <td align="left" colspan="4">
+                   <b>公司信息</b>
+               </td>
+           </tr>
+            <tr>
+                <td align="right">
                     公司名称:
                 </td>
                 <td align="left" colspan="3">
-                    工作内容:
+                    {{ business.name }} 
                 </td>
             </tr>
-        {% for jiaoyu in worklist %}
-            <tr >
-                <td align="center">
-                    {{ jiaoyu.dateqj|default_if_none:"" }}
+            <tr>
+                <td align="right">
+                    公司规模:
                 </td>
-                <td align="center">
-                    {{ jiaoyu.workname|default_if_none:"" }}
+                <td align="left">
+                    {{ business.num }} 
+                </td>
+                <td align="right">
+                    公司性质:
+                </td>
+                <td align="left">
+                    {{ work.type|default_if_none:"" }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    公司网站:
                 </td>
                 <td align="left" colspan="3">
-                    {{ jiaoyu.workcontent|default_if_none:"" }}
+                    {{ business.url|default_if_none:"暂无" }} 
                 </td>
+                
             </tr>
-        {% endfor %}
+            <tr >
+               <td align="left" colspan="4">
+                   公司简介
+               </td>
+           </tr>
+            <tr >
+               <td align="left" colspan="4">
+                   {{ business.desc }}
+               </td>
+           </tr>
             <tr>
                 <td align="right" colspan="4">
                     <div style="float: right;margin-right: 10px;"><input type="button" style="width: 100px;" value="分享到微博"  onclick="fenxiang()" ></div>{% csrf_token %}

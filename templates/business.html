@@ -1,0 +1,83 @@
+{% extends "basepage/basepage.html" %}
+{% block content %}
+<script type="text/javascript">
+    function submitForm(){
+        if(!valSubmit()){
+            return;
+            }
+        $j("#form1")[0].submit();
+    }
+$j(function(){
+    result_alert2('{{ result }}','{{ msg }}');
+});
+</script>
+    <div class="con_center" >
+    <form id="form1" action="/savecompany" method="post">
+        <table id="business_table" class="table0 bigtable tdpadding tablemargin" width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr >
+                <td align="left" colspan="4">
+                    <b>修改公司信息</b>
+                    <a href="/worklist"  style="float: right;" ><div class="btn_style1"
+                                                 style="background:url(/media/images/btn_mod.gif) no-repeat 0 0;"
+                                                 onmouseover="this.style.backgroundPosition='0 -24px'"
+                                                 onmouseout="this.style.backgroundPosition='0 0'"
+                                                 onmousedown="this.style.backgroundPosition='0 -48px'"
+                                                 onmouseup="this.style.backgroundPosition='0 -24px'">职位列表</div></a>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <span class="red_star">*</span>公司名称:
+                </td>
+                <td colspan="3">
+                    <input type="text" name="name"  val="{'required':true,'title':'公司名称'}" value="{{ business.name|default_if_none:"" }}">
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <span class="red_star">*</span> 公司规模(员工数量):
+                </td>
+                <td align="left">
+                    <input type="text" name="num"  val="{'required':true,'type':'int','min':0,'title':'员工数量'}" value="{{ business.num|default_if_none:"1" }}">
+                </td>
+                <td align="right">
+                    <span class="red_star">*</span>公司性质:
+                </td>
+                <td align="left">
+                    <input type="radio" name="type" value="私企"  {% ifequal bussiness.xingzhi "私企" %} checked="checked" {% endifequal %} {% if not bussiness.xingzhi  %} checked="checked" {% endif %}style="width: 30px;" >私企 <input type="radio" name="type" value="国企"  {% ifequal  bussiness.type "国企"  %} checked="checked" {% endifequal %}  style="width: 30px;"> 国企<input type="radio" name="type" value="外企"  {% ifequal bussiness.type "外企"  %} checked="checked" {% endifequal %}  style="width: 30px;"> 外企
+                </td>
+            </tr>
+
+
+            <tr>
+
+                <td align="right">
+                    公司网站地址:
+                </td>
+                <td align="left" colspan="3">
+                    <input type="text" name="url"  value="{{ business.url|default_if_none:"" }}">
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    公司描述：
+                </td>
+                <td align="left" colspan="3">
+                    <textarea rows="25"  name="desc"  style="width: 75%;">{{ business.desc|default_if_none:"" }}</textarea>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td align="center" colspan="4">
+                 <input type="button" style="width: 100px;" value="保存" onclick="submitForm()">{% csrf_token %}
+
+                </td>
+
+            </tr>
+        </table>
+    </form>
+    </div>
+
+
+{% endblock  %}

@@ -3,17 +3,22 @@
     <div class="con_head">
         <div class="con_h_left" >
             <p><span >{{ msg }}</span></p>
-            <p><span><a>个人用户</a></span></p>
-            <p><span><a>创建一份简历</a></span></p>
-            <p><span><a>企业用户</a></span></p>
-            <p><span><a>发布招聘信息</a></span></p>
+            {% ifequal user.person.type  1%}
+            <p><span><b>个人用户</b></span></p>
+            <p class="btn"><a href="/addjianli">创建一份简历</a></p>
+            {% endifequal %}
+            {% ifequal user.person.type 2 %}
+            <p><span><b>企业用户</b></span></p>
+            <p class="btn"><a href="/updatecompany">完善企业信息</a></p>
+            <p class="btn"><a href="/addwork">发布招聘信息</a></p>
+            {% endifequal %}
 
         </div>
 
         <div class="con_h_right">
             <div style="height: 30px;"></div>
             <div style="text-align: left;padding-left: 20px;" >
-                <p>&gt; 绑定微博，可以将招聘信息同步到微博中</p>
+                <p>&gt; 绑定微博，可以在更新信息时同步到微博中</p>
                 <p>&gt; <a href="#">绑定新浪微博账号</a></p>
                 <p>&gt; <a href="#">绑定腾讯微博账号</a></p>
                 <p>&gt; <a href="#">绑定网易微博账号</a></p>

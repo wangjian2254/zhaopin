@@ -1,9 +1,11 @@
 <div id="top">
 <div style="float: left;padding-left: 50px;">
     <a href="/"  class="topfont">首页</a>
+    <a href="/SearchWork"  class="topfont">找工作</a>
+    <a href="/SearchPeople"  class="topfont">找人才</a>
 </div>
     {% if user.is_authenticated %}
-        <span class="topfont">{{ user.username }}</span>&nbsp;<span class="topfont">|</span>&nbsp;<a href="/jianlilist"  class="topfont">简历管理</a>&nbsp;<span class="topfont">|</span>&nbsp;<a href="/accounts/login/"  class="topfont">发布职位</a>&nbsp;<span class="topfont">|</span>&nbsp;<a href="/accounts/logout/"  class="topfont">退出</a>&nbsp;&nbsp;
+        <span class="topfont">{{ user.username }}</span>{% if user.business %}&nbsp;&nbsp;&nbsp;<a href="/updatecompany" class="topfont">{{ user.business.name }}</a>{% endif %}{% ifequal user.person.type 1 %}&nbsp;<span class="topfont">|</span>&nbsp;<a href="/jianlilist"  class="topfont">简历管理</a>{% endifequal %}{% ifequal user.person.type 2 %}&nbsp;<span class="topfont">|</span>&nbsp;<a href="/worklist"  class="topfont">职位管理</a>{% endifequal %}&nbsp;<span class="topfont">|</span>&nbsp;<a href="/accounts/logout/"  class="topfont">退出</a>&nbsp;&nbsp;
     {% else %}
         <a href="/accounts/login/"  class="topfont">登录</a>&nbsp;<span class="topfont">|</span>&nbsp;<a href="/Reg"  class="topfont">注册</a>
     {% endif %}

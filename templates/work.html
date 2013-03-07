@@ -1,0 +1,97 @@
+{% extends "basepage/basepage.html" %}
+{% block content %}
+<script type="text/javascript">
+    function submitForm(){
+        if(!valSubmit()){
+            return;
+            }
+        $j("#form1")[0].submit();
+    }
+$j(function(){
+    result_alert2('{{ result }}','{{ msg }}');
+});
+</script>
+    <div class="con_center" >
+    <form id="form1" action="/savework" method="post">
+        <table id="jianli_table" class="table0 bigtable tdpadding tablemargin" width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr >
+                <td align="left" colspan="4">
+                    <b>{% if not jianli.id %}新建职位{% else %}修改职位{% endif %}</b><input type="hidden" name="id" value="{{ work.id|default_if_none:"" }}">
+                    <a href="/worklist"  style="float: right;" ><div class="btn_style1"
+                                                 style="background:url(/media/images/btn_mod.gif) no-repeat 0 0;"
+                                                 onmouseover="this.style.backgroundPosition='0 -24px'"
+                                                 onmouseout="this.style.backgroundPosition='0 0'"
+                                                 onmousedown="this.style.backgroundPosition='0 -48px'"
+                                                 onmouseup="this.style.backgroundPosition='0 -24px'">职位列表</div></a>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <span class="red_star">*</span>职位名称:
+                </td>
+                <td colspan="3">
+                    <input type="text" name="zhiwei"  val="{'required':true,'title':'职位名称'}" value="{{ work.zhiwei|default_if_none:"" }}">
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <span class="red_star">*</span> 工作地点:
+                </td>
+                <td align="left">
+                    <input type="text" name="workadd"  val="{'required':true,'title':'工作地点'}" value="{{ work.workadd|default_if_none:"" }}">
+                </td>
+                <td align="right">
+                    <span class="red_star">*</span>工作性质:
+                </td>
+                <td align="left">
+                    <input type="radio" name="xingzhi" value="qz"  {% ifequal work.xingzhi "qz" %} checked="checked" {% endifequal %} style="width: 30px;" >全职 <input type="radio" name="xingzhi" value="jz"  {% ifequal  work.xingzhi "jz"  %} checked="checked" {% endifequal %}  style="width: 30px;"> 兼职<input type="radio" name="xingzhi" value=""  {% if not  work.xingzhi  %} checked="checked" {% endif %}  style="width: 30px;"> 皆可
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <span class="red_star">*</span>需要人数:
+                </td>
+                <td align="left">
+                    <input type="text" name="num" val="{'required':true,'type':'int','min':0,'title':'需要人数'}" value="{{ work.num|default_if_none:"1" }}" >
+                </td>
+                <td align="right">
+                    <span class="red_star">*</span>最低工作年龄:
+                </td>
+                <td align="left">
+                    <input type="text" name="workage"  val="{'required':true,'type':'int','min':0,'title':'最低工作年龄'}" value="{{ work.workage|default_if_none:"0" }}">
+                </td>
+            </tr>
+
+            <tr>
+
+                <td align="right">
+                    <span class="red_star">*</span>薪水范围:
+                </td>
+                <td align="left" colspan="3">
+                    <input type="text" name="price1"  val="{'type':'int','title':'薪水范围起'}" value="{{ work.price1|default_if_none:"" }}"> ~
+                    <input type="text" name="price2"  val="{'type':'int','title':'薪水范围止'}" value="{{ work.price2|default_if_none:"" }}">
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    工作描述：
+                </td>
+                <td align="left" colspan="3">
+                    <textarea rows="25"  name="desc"  style="width: 75%;">{{ work.desc|default_if_none:"" }}</textarea>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td align="center" colspan="4">
+                 <input type="button" style="width: 100px;" value="保存" onclick="submitForm()">{% csrf_token %}
+
+                </td>
+
+            </tr>
+        </table>
+    </form>
+    </div>
+
+
+{% endblock  %}
