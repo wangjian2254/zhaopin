@@ -27,10 +27,10 @@ $j(function(){
             </tr>
             <tr>
                 <td align="right">
-                    <span class="red_star">*</span>简历名称:
+                    <span class="red_star">*</span>职位名称:
                 </td>
                 <td colspan="3">
-                    <input type="text" name="name"  val="{'required':true,'title':'简历名称'}" value="{{ jianli.name|default_if_none:"" }}">
+                    <input type="text" name="name"  val="{'required':true,'title':'职位名称'}" value="{{ jianli.name|default_if_none:"" }}">
                 </td>
             </tr>
             <tr>
@@ -73,6 +73,31 @@ $j(function(){
                 </td>
                 <td align="left">
                     <input type="text" name="minzu"  val="{'required':true,'title':'民族'}" value="{{ jianli.minzu|default_if_none:"" }}">
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <span class="red_star">*</span>学位:
+                </td>
+                <td align="left">
+                    <select name="xuewei"  style="width: 180px;height: 18px;line-height: 18px;" >
+                        <option value="6" {% ifequal jianli.xuewei '6' %}selected="selected" {% endifequal %}>博士</option>
+                        <option value="5" {% ifequal jianli.xuewei '5' %}selected="selected" {% endifequal %}>硕士</option>
+                        <option value="4" {% ifequal jianli.xuewei '4' %}selected="selected" {% endifequal %}{% if not jianli.xuewei %}selected="selected" {% endif %}>大学</option>
+                        <option value="3" {% ifequal jianli.xuewei '3' %}selected="selected" {% endifequal %}>大专</option>
+                        <option value="2" {% ifequal jianli.xuewei '2' %}selected="selected" {% endifequal %}>高中</option>
+                        <option value="1" {% ifequal jianli.xuewei '1' %}selected="selected" {% endifequal %}>中专</option>
+                    </select>
+                </td>
+                <td align="right">
+                    <span class="red_star">*</span>工作地点:
+                </td>
+                <td align="left">
+                    <select name="workadd"  style="width: 180px;height: 18px;line-height: 18px;" >
+                        <option value="北京" {% ifequal jianli.workadd '北京' %}selected="selected" {% endifequal %}>北京</option>
+                        <option value="天津" {% ifequal jianli.workadd '天津' %}selected="selected" {% endifequal %}{% if not jianli.workadd %}selected="selected" {% endif %}>天津</option>
+                        <option value="上海" {% ifequal jianli.workadd '上海' %}selected="selected" {% endifequal %}>上海</option>
+                    </select>
                 </td>
             </tr>
             <tr>

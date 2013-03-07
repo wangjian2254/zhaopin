@@ -62,6 +62,25 @@ $j(function(){
             </tr>
             <tr>
                 <td align="right">
+                    学位:
+                </td>
+                <td align="left">
+                    {% ifequal jianli.xuewei '6' %}博士{% endifequal %}
+                    {% ifequal jianli.xuewei '5' %}硕士{% endifequal %}
+                    {% ifequal jianli.xuewei '4' %}大学{% endifequal %}
+                    {% ifequal jianli.xuewei '3' %}大专{% endifequal %}
+                    {% ifequal jianli.xuewei '2' %}高中{% endifequal %}
+                    {% ifequal jianli.xuewei '1' %}中专{% endifequal %}
+                </td>
+                <td align="right">
+                    工作地点:
+                </td>
+                <td align="left">
+                    {{ jianli.workadd|default_if_none:"" }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
                     手机号:
                 </td>
                 <td align="left">

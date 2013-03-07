@@ -1,0 +1,212 @@
+{% extends "basepage/basepage.html" %}
+{% block content %}
+<script type="text/javascript">
+    $j(function(){
+        result_alert2('{{ result }}','{{ msg }}');
+    });
+</script>
+    <div class="con_center" >
+        <div style="width: 100%">
+            <form action="/SearchPeople" method="post">
+                <table width="100%" cellpadding="0" cellspacing="0" >
+                    <tr style="height: 35px;">
+                        <td width="80px" style="text-align: right;">
+                            关键字：
+                        </td>
+                        <td width="300px">
+                            <input name="searchValue" type="text" value="{{ pam.searchValue }}" style="width: 280px;height: 25px;line-height: 25px;font-size: 15px;" >
+                        </td>
+                        <td width="55px">
+                            <input type="submit" class="defaultButton" value="搜索">{% csrf_token %}
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr style="height: 35px;">
+                        <td width="80px" style="text-align: right;">
+                            工作地点:
+                        </td>
+                        <td width="300px">
+                            <select name="add"  style="width: 180px;height: 18px;line-height: 18px;" >
+                                <option value="" {% if not pam.add %}selected="selected" {% endif %}>所有</option>
+                                <option value="北京" {% ifequal pam.add '北京' %}selected="selected" {% endifequal %}>北京</option>
+                                <option value="天津" {% ifequal pam.add '天津' %}selected="selected" {% endifequal %}>天津</option>
+                                <option value="上海" {% ifequal pam.add '上海' %}selected="selected" {% endifequal %}>上海</option>
+                            </select>
+                        </td>
+                        <td width="55px">
+
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr style="height: 35px;">
+                        <td width="80px" style="text-align: right;">
+                            年龄:
+                        </td>
+                        <td width="300px">
+                            <select name="age"  style="width: 180px;height: 18px;line-height: 18px;" >
+                                <option value="" {% if not pam.age %}selected="selected" {% endif %}>不限</option>
+                                <option value=",20" {% ifequal pam.age ',20' %}selected="selected" {% endifequal %}>20岁以下</option>
+                                <option value="20,25" {% ifequal pam.age '20,25' %}selected="selected" {% endifequal %}>21～25岁</option>
+                                <option value="25,30" {% ifequal pam.age '25,30' %}selected="selected" {% endifequal %}>26～30岁</option>
+                                <option value="30,35" {% ifequal pam.age '30,35' %}selected="selected" {% endifequal %}>31～35岁</option>
+                                <option value="35," {% ifequal pam.age '35' %}selected="selected" {% endifequal %}>36岁以上</option>
+                            </select>
+                        </td>
+                        <td width="55px">
+
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr style="height: 35px;">
+                        <td width="80px" style="text-align: right;">
+                            最低工作年龄:
+                        </td>
+                        <td width="300px">
+                            <select name="workage"  style="width: 180px;height: 18px;line-height: 18px;" >
+                                <option value="" {% if not pam.workage %}selected="selected" {% endif %}>不限</option>
+                                <option value="1" {% ifequal pam.workage '1' %}selected="selected" {% endifequal %}>一年</option>
+                                <option value="2" {% ifequal pam.workage '2' %}selected="selected" {% endifequal %}>二年</option>
+                                <option value="3" {% ifequal pam.workage '3' %}selected="selected" {% endifequal %}>三年</option>
+                                <option value="4" {% ifequal pam.workage '4' %}selected="selected" {% endifequal %}>四年</option>
+                                <option value="5" {% ifequal pam.workage '5' %}selected="selected" {% endifequal %}>五年</option>
+                                <option value="6" {% ifequal pam.workage '6' %}selected="selected" {% endifequal %}>六年</option>
+                            </select>
+                        </td>
+                        <td width="55px">
+
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr style="height: 35px;">
+                        <td width="80px" style="text-align: right;">
+                            性别:
+                        </td>
+                        <td width="300px">
+                            <input type="radio" name="sex" value=""  {% if not pam.sex %}checked="checked" {% endif %}>所有
+                            <input type="radio" name="sex" value="1" {% ifequal pam.sex '1' %}checked="checked" {% endifequal %}>男
+                            <input type="radio" name="sex" value="0" {% ifequal pam.sex '0' %}checked="checked" {% endifequal %}>女
+                        </td>
+                        <td width="55px">
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr style="height: 35px;">
+                        <td width="80px" style="text-align: right;">
+                            专业:
+                        </td>
+                        <td width="300px">
+                            <input type="text" name="zhuanye"   value="{{ pam.zhuanye|default_if_none:"" }}" style="width: 200px;">
+                        </td>
+                        <td width="55px">
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr style="height: 35px;">
+                        <td width="80px" style="text-align: right;">
+                            最低学位:
+                        </td>
+                        <td width="300px">
+                            <select name="xuewei"  style="width: 180px;height: 18px;line-height: 18px;" >
+                                <option value="" {% if not pam.workage %}selected="selected" {% endif %}>不限</option>
+                                <option value="6" {% ifequal pam.xuewei '6' %}selected="selected" {% endifequal %}>博士</option>
+                                <option value="5" {% ifequal pam.xuewei '5' %}selected="selected" {% endifequal %}>硕士</option>
+                                <option value="4" {% ifequal pam.xuewei '4' %}selected="selected" {% endifequal %}>大学</option>
+                                <option value="3" {% ifequal pam.xuewei '3' %}selected="selected" {% endifequal %}>大专</option>
+                                <option value="2" {% ifequal pam.xuewei '2' %}selected="selected" {% endifequal %}>高中</option>
+                                <option value="1" {% ifequal pam.xuewei '1' %}selected="selected" {% endifequal %}>中专</option>
+                            </select>
+                        </td>
+                        <td width="55px">
+
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div style="width: 100%;">
+        <table class="tablemargin" width="100%" height="100%" border="0" cellspacing="0"
+                        cellpadding="0">
+        <tr>
+            <td height="32" class="table1">
+                <div class="content_title">
+                    <span> <b>找人才</b></span>
+                    <div class="title_form600">
+
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td valign="top">
+        <table id="jianlilist" class="table0 tdpadding" width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr >
+            <td width="50px" align="center"  >
+                    序号
+                </td>
+                <td align="center" >
+                    求职简历名称
+                </td>
+                <td width="100px" align="center" >
+                    最后修改日期
+                </td>
+            </tr>
+            {% for work in currentpage.object_list %}
+            <tr>
+                <td align="center" >{{ currentpage.start_index|add:forloop.counter0 }}</td>
+                <td><a href="/lookjianli?jianli_id={{ work.pk }}" target="_blank">{{ work.name }}</a></td>
+                <td align="center" >{{ work.updatetime|date:"Y-m-d" }}</td>
+            </tr>
+            {% endfor %}
+        {% if not currentpage.object_list.count %}
+            <tr>
+            <td  align="center" colspan="4"  >
+                没有找到数据。
+            </td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td  align="center" colspan="4"  >
+                <a href="#" >(当前第 {{ start }} 页,共 {{ page.num_pages }} 页)</a>&nbsp;&nbsp;&nbsp;
+            {% if currentpage.has_previous %}
+                     <a href="/SearchPeople?{{ querystr }}&start={{ currentpage.previous_page_number }}&limit={{ limit }}">前一页</a>
+            {% endif %}
+            {% for p in page.page_range %}
+                {% ifequal start p %}
+{#                    <a href="#" style="text-decoration: underline;">{{ p }}</a>#}
+                    <a href="/SearchPeople?{{ querystr }}&start={{ p }}&limit={{ limit }}">{{ p }}</a>
+                {% else %}
+                    <a href="/SearchPeople?{{ querystr }}&start={{ p }}&limit={{ limit }}">{{ p }}</a>
+                {% endifequal %}
+            {% endfor %}
+            {% if currentpage.has_next %}
+                     <a href="/SearchPeople?{{ querystr }}&start={{ currentpage.next_page_number }}&limit={{ limit }}">后一页</a>
+            {% endif %}
+
+                </td>
+            </tr>
+        </table>
+        </td>
+        </tr>
+        </table>
+        </div>
+    </div>
+<script type="text/javascript">
+    senfe("jianlilist","#f6f6f6","#fff","#d9ebf5","#aed6fc");
+</script>
+{% endblock  %}

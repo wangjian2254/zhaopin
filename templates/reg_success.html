@@ -2,16 +2,20 @@
 {% block content %}
     <div class="con_head">
         <div class="con_h_left" >
-            <p><span >{{ msg }}</span></p>
+
+        <div style="text-align: left;margin-left:10px;">
+            <p><span style="color: red;" >{{ msg }}</span></p>
             {% ifequal user.person.type  1%}
             <p><span><b>个人用户</b></span></p>
-            <p class="btn"><a href="/addjianli">创建一份简历</a></p>
+            <p ><a href="/addjianli" class="reg_btn">创建简历</a></p>
             {% endifequal %}
             {% ifequal user.person.type 2 %}
             <p><span><b>企业用户</b></span></p>
-            <p class="btn"><a href="/updatecompany">完善企业信息</a></p>
-            <p class="btn"><a href="/addwork">发布招聘信息</a></p>
+            <p><a href="/updatecompany" class="reg_btn">企业信息</a></p>
+            <p ><a href="/addwork" class="reg_btn">发布职位</a></p>
             {% endifequal %}
+        </div>
+
 
         </div>
 

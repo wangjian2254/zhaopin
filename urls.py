@@ -3,16 +3,17 @@ from django.conf.urls.defaults import patterns, include, url
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
-from pin.loginviews import reg, reg2
+from zhaopin.pin.loginviews import reg, reg2
 from zhaopin import settings
 from zhaopin.pin.views import index,jianlilist,addjianli,deljianli,savejianli,pubjianli,lookjianli,worklist,addwork,savework,pubwork,lookwork,updatecompany,savecompany
-from zhaopin.pin.searchView import searchWork
+from zhaopin.pin.searchView import searchWork,searchPeople
 admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
     (r'^$', index),
     (r'^SearchWork', searchWork),
+    (r'^SearchPeople', searchPeople),
     (r'^jianlilist$', jianlilist),
     (r'^worklist$', worklist),
     (r'^addwork', addwork),

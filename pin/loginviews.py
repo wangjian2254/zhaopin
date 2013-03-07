@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.contrib.auth import  login as auth_login, authenticate
-from pin.models import Person
+from zhaopin.pin.models import Person
 
 __author__ = '张藐方'
 

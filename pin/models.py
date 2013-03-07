@@ -25,7 +25,7 @@ class WeiBo(models.Model):
 
 class JianLi(models.Model):#简历
     user=models.ForeignKey(User,verbose_name=u'简历人')
-    name=models.CharField(max_length=10,verbose_name=u'简历名称')
+    name=models.CharField(max_length=10,verbose_name=u'职位名称')
     updatetime=models.DateTimeField(auto_now=True)
     username=models.CharField(max_length=10,verbose_name=u'姓名')
     age=models.DateField(verbose_name=u'出生年月日')
@@ -35,6 +35,8 @@ class JianLi(models.Model):#简历
     minzu=models.CharField(max_length=10,verbose_name=u'民族')
     tel=models.CharField(max_length=11,verbose_name=u'联系方式，手机')
     email=models.EmailField(verbose_name=u'电子邮件')
+    xuewei=models.CharField(max_length=10,verbose_name=u'学位')
+    workadd=models.CharField(max_length=10,verbose_name=u'工作地点')
     desc=models.CharField(max_length=500,verbose_name=u'自我描述')
     looknum=models.IntegerField(default=0,verbose_name=u'被浏览次数')
     ispub=models.BooleanField(default=True,verbose_name=u'是否公开')
@@ -87,5 +89,12 @@ class WorkLookRecord(models.Model):
 
 class Column(models.Model):
     name=models.CharField(max_length=10,verbose_name=u'栏目名称')
+    code=models.CharField(max_length=10,verbose_name=u'栏目代码',help_text=u'templates 中使用')
+
+class News(models.Model):
+    title=models.CharField(max_length=50,verbose_name=u'标题')
+    content=models.TextField(verbose_name=u'内容',blank=True,null=True)
+    updatetime=models.DateTimeField(auto_created=True)
+    ispub=models.BooleanField(default=True,verbose_name=u'是否公开')
 
 

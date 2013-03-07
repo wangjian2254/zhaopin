@@ -148,3 +148,17 @@ p{
 #jianli_table input{
     width: 250px;
 }
+
+.reg_btn{
+	display:block inline;
+	width:87px;
+	height:29px;
+	line-height:29px;
+	color:#fff;
+	text-align:center;
+	background:url(../images/main/login_btn2.gif) repeat-x 0px 0px;
+	float:left;
+	font-weight:bold;
+	font-size:13px;
+	margin-left:10px;
+}

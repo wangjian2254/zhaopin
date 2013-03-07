@@ -23,6 +23,41 @@
                             &nbsp;
                         </td>
                     </tr>
+                    <tr style="height: 35px;">
+                        <td width="80px" style="text-align: right;">
+                            工作地点:
+                        </td>
+                        <td width="300px">
+                            <select name="add"  style="width: 180px;height: 18px;line-height: 18px;" >
+                                <option value="" {% if not pam.add %}selected="selected" {% endif %}>所有</option>
+                                <option value="北京" {% ifequal pam.add '北京' %}selected="selected" {% endifequal %}>北京</option>
+                                <option value="天津" {% ifequal pam.add '天津' %}selected="selected" {% endifequal %}>天津</option>
+                                <option value="上海" {% ifequal pam.add '上海' %}selected="selected" {% endifequal %}>上海</option>
+                            </select>
+                        </td>
+                        <td width="55px">
+
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr style="height: 35px;">
+                        <td width="80px" style="text-align: right;">
+                            工作类型:
+                        </td>
+                        <td width="300px">
+                            <input type="radio" name="type" value=""  {% if not pam.type %}checked="checked" {% endif %}>所有
+                            <input type="radio" name="type" value="qz" {% ifequal pam.type 'qz' %}checked="checked" {% endifequal %}>全职
+                            <input type="radio" name="type" value="jz" {% ifequal pam.type 'jz' %}checked="checked" {% endifequal %}>兼职
+                        </td>
+                        <td width="55px">
+{#{{ querystr }}#}
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
                 </table>
             </form>
         </div>
@@ -54,13 +89,40 @@
                     最后修改日期
                 </td>
             </tr>
-            {% for work in list %}
+            {% for work in currentpage.object_list %}
             <tr>
-                <td align="center" >{{ forloop.counter }}</td>
-                <td><a href="/lookwork?work_id={{ work.pk }}">{{ work.zhiwei }}</a></td>
+                <td align="center" >{{ currentpage.start_index|add:forloop.counter0 }}</td>
+                <td><a href="/lookwork?work_id={{ work.pk }}" target="_blank">{{ work.zhiwei }}</a></td>
                 <td align="center" >{{ work.updatetime|date:"Y-m-d" }}</td>
             </tr>
             {% endfor %}
+        {% if not currentpage.object_list.count %}
+            <tr>
+            <td  align="center" colspan="4"  >
+                没有找到数据。
+            </td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td  align="center" colspan="4"  >
+                <a href="#" >(当前第 {{ start }} 页,共 {{ page.num_pages }} 页)</a>&nbsp;&nbsp;&nbsp;
+            {% if currentpage.has_previous %}
+                     <a href="/SearchWork?{{ querystr }}&start={{ currentpage.previous_page_number }}&limit={{ limit }}">前一页</a>
+            {% endif %}
+            {% for p in page.page_range %}
+                {% ifequal start p %}
+                    <a href="#" style="text-decoration: underline;">{{ p }}</a>
+{#                    <a href="/SearchWork?{{ querystr }}&start={{ p }}&limit={{ limit }}">{{ p }}</a>#}
+                {% else %}
+                    <a href="/SearchWork?{{ querystr }}&start={{ p }}&limit={{ limit }}">{{ p }}</a>
+                {% endifequal %}
+            {% endfor %}
+            {% if currentpage.has_next %}
+                     <a href="/SearchWork?{{ querystr }}&start={{ currentpage.next_page_number }}&limit={{ limit }}">后一页</a>
+            {% endif %}
+
+                </td>
+            </tr>
         </table>
         </td>
         </tr>

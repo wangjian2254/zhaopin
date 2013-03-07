@@ -81,7 +81,7 @@ def lookwork(request):
         businesslist=Business.objects.filter(user=work.user)[:1]
         if 1==len(businesslist):
             business=businesslist[0]
-        if request.user.is_authenticated and request.user.person.type==1:
+        if request.user.is_authenticated() and request.user.person.type==1:
             lookrecord=WorkLookRecord()
             lookrecord.zhiwei=work
             lookrecord.user=request.user
@@ -116,7 +116,7 @@ def lookjianli(request):
             jiaoyulist.append(j)
         for j in WorkJingYan.objects.filter(jianli=jianli):
             worklist.append(j)
-        if request.user.is_authenticated and request.user.person.type==2:
+        if request.user.is_authenticated() and request.user.person.type==2:
             lookrecord=LookRecord()
             lookrecord.jianli=jianli
             lookrecord.user=request.user
@@ -206,6 +206,8 @@ def savejianli(request):
     tel=request.POST.get('tel','')
     email=request.POST.get('email','')
     desc=request.POST.get('desc','')
+    workadd=request.POST.get('workadd','')
+    xuewei=request.POST.get('xuewei','')
     if id:
         jianli=JianLi.objects.get(pk=id)
     else:
@@ -213,6 +215,10 @@ def savejianli(request):
     jianli.user=user
     if name:
         jianli.name=name
+    if workadd:
+        jianli.workadd=workadd
+    if xuewei:
+        jianli.xuewei=xuewei
     if username:
         jianli.username=username
     if age:
