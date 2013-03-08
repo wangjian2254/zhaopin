@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.contrib.auth.views import login, logout
 from zhaopin.pin.loginviews import reg, reg2
 from zhaopin import settings
-from zhaopin.pin.views import index,jianlilist,addjianli,deljianli,savejianli,pubjianli,lookjianli,worklist,addwork,savework,pubwork,lookwork,updatecompany,savecompany
+from zhaopin.pin.views import index,jianliRecodelook,jianlilist,addjianli,deljianli,savejianli,pubjianli,lookjianli,worklist,addwork,savework,pubwork,lookwork,updatecompany,savecompany,companylook
 from zhaopin.pin.searchView import searchWork,searchPeople
 admin.autodiscover()
 
@@ -23,6 +23,8 @@ urlpatterns = patterns('',
 
     (r'^pubjianli', pubjianli),
     (r'^pubwork', pubwork),
+    (r'^jianliRecodelook', jianliRecodelook),
+    (r'^lookcompany', companylook),
     (r'^updatecompany', updatecompany),
     (r'^savecompany', savecompany),
     (r'^lookjianli', lookjianli),

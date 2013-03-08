@@ -34,13 +34,13 @@ $j(function(){
                 </td>
             </tr>
             <tr>
-                <td align="right">
+                <td align="right" width="100px">
                     <span class="red_star">*</span> 姓名:
                 </td>
-                <td align="left">
+                <td align="left" width="400px">
                     <input type="text" name="username"  val="{'required':true,'title':'姓名'}" value="{{ jianli.username|default_if_none:"" }}">
                 </td>
-                <td align="right">
+                <td align="right" width="100px">
                     <span class="red_star">*</span>性别:
                 </td>
                 <td align="left">
@@ -180,7 +180,8 @@ $j(function(){
 
             <tr>
                 <td align="center" colspan="4">
-                 <input type="button" style="width: 100px;" value="保存" onclick="submitForm()">{% csrf_token %}
+                    <a href="#" onclick="submitForm()"  class="commit_btn" >保存</a>
+                 <input type="hidden" style="width: 100px;" value="保存" onclick="submitForm()">{% csrf_token %}
 
                 </td>
 

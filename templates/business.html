@@ -34,13 +34,13 @@ $j(function(){
                 </td>
             </tr>
             <tr>
-                <td align="right">
+                <td align="right" width="100px">
                     <span class="red_star">*</span> 公司规模(员工数量):
                 </td>
-                <td align="left">
+                <td align="left" width="400px">
                     <input type="text" name="num"  val="{'required':true,'type':'int','min':0,'title':'员工数量'}" value="{{ business.num|default_if_none:"1" }}">
                 </td>
-                <td align="right">
+                <td align="right" width="100px">
                     <span class="red_star">*</span>公司性质:
                 </td>
                 <td align="left">
@@ -70,7 +70,8 @@ $j(function(){
 
             <tr>
                 <td align="center" colspan="4">
-                 <input type="button" style="width: 100px;" value="保存" onclick="submitForm()">{% csrf_token %}
+                    <a href="#" onclick="submitForm()"  class="commit_btn" >保存</a>
+                 <input type="hidden" style="width: 100px;" value="保存" onclick="submitForm()">{% csrf_token %}
 
                 </td>
 

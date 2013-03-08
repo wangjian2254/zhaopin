@@ -1,0 +1,62 @@
+{% extends "basepage/basepage.html" %}
+{% block content %}
+<script type="text/javascript">
+    $j(function(){
+        result_alert2('{{ result }}','{{ msg }}');
+    });
+</script>
+    <div class="con_center" >
+
+            <div style="width: 100%;">
+            <table class="tablemargin" width="100%" height="100%" border="0" cellspacing="0"
+                			cellpadding="0">
+            <tr>
+                <td height="32" class="table1">
+                    <div class="content_title">
+                        <span> <b>{{ jianli.name }}/简历查看记录</b></span>
+                        <div class="title_form600" >
+
+                            <a href="/jianlilist"  style="float: right;" ><div class="btn_style1"
+                                 style="background:url(/media/images/btn_mod.gif) no-repeat 0 0;"
+                                 onmouseover="this.style.backgroundPosition='0 -24px'"
+                                 onmouseout="this.style.backgroundPosition='0 0'"
+                                 onmousedown="this.style.backgroundPosition='0 -48px'"
+                                 onmouseup="this.style.backgroundPosition='0 -24px'">简历列表</div></a>
+
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td valign="top">
+            <table id="worklist" class="table0 tdpadding" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr >
+                <td width="50px" align="center"  >
+                        序号
+                    </td>
+                    <td align="center" >
+                        公司名称
+                    </td>
+                    <td width="100px" align="center" >
+                        查看时间
+                    </td>
+
+                </tr>
+                {% for recode in list %}
+                <tr>
+                    <td align="center" >{{ forloop.counter }}</td>
+                    <td class="btn"><a href="/lookcompany?company_id={{ recode.user.business.id }}">{{ recode.user.business.name }}</a></td>
+                    <td align="center" >{{ recode.updatetime|date:"Y-m-d" }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            </td>
+            </tr>
+            </table>
+            </div>
+    </div>
+<script type="text/javascript">
+    senfe("worklist","#f6f6f6","#fff","#d9ebf5","#aed6fc");
+</script>
+{% endblock  %}

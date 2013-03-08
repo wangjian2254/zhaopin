@@ -2,9 +2,11 @@
 # Create your views here.
 import datetime
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
+from zhaopin.pin.models import Replay
 from zhaopin.pin.models import LookRecord, ZhiWei, WorkLookRecord, Business
 from zhaopin.pin.models import JianLi, JiaoYu, WorkJingYan
 RESULT='result'
@@ -21,8 +23,9 @@ def getSessionMsg(request,requestdic):
     return requestdic
 
 def index(request):
-    newzhiweilist=ZhiWei.objects.order_by('-updatetime')[:10]
-    return render_to_response('index.html',{'newzhiweilist':newzhiweilist},RequestContext(request,{}))
+    newzhiweilist=ZhiWei.objects.filter(ispub=True).order_by('-updatetime')[:10]
+    newjianlilist=JianLi.objects.filter(ispub=True).order_by('-updatetime')[:10]
+    return render_to_response('index.html',{'newzhiweilist':newzhiweilist,'newjianlilist':newjianlilist},RequestContext(request,{}))
 
 
 @login_required
@@ -81,15 +84,17 @@ def lookwork(request):
         businesslist=Business.objects.filter(user=work.user)[:1]
         if 1==len(businesslist):
             business=businesslist[0]
-        if request.user.is_authenticated() and request.user.person.type==1:
+        if request.user.is_authenticated() and hasattr(request.user,'person') and request.user.person.type==1:
             lookrecord=WorkLookRecord()
             lookrecord.zhiwei=work
             lookrecord.user=request.user
+            lookrecord.updatetime=datetime.datetime.now()
             lookrecord.save()
+            ZhiWei.objects.filter(pk=workid).update(looknum=work.looknum+1)
     else:
         request.session[RESULT]=WARN
         request.session[MSG]=u'操作失败，未找到简历，或简历已经被删除。'
-    return render_to_response('worklook.html',getSessionMsg(request,{'work':work,'business':business}),RequestContext(request,{}))
+    return render_to_response('worklook.html',getSessionMsg(request,{'obj':work,'objtype':'work','business':business}),RequestContext(request,{}))
 
 
 
@@ -116,15 +121,17 @@ def lookjianli(request):
             jiaoyulist.append(j)
         for j in WorkJingYan.objects.filter(jianli=jianli):
             worklist.append(j)
-        if request.user.is_authenticated() and request.user.person.type==2:
+        if request.user.is_authenticated() and hasattr(request.user,'person') and request.user.person.type==2:
             lookrecord=LookRecord()
             lookrecord.jianli=jianli
             lookrecord.user=request.user
+            lookrecord.updatetime=datetime.datetime.now()
             lookrecord.save()
+            JianLi.objects.filter(pk=jianliid).update(looknum=jianli.looknum+1)
     else:
         request.session[RESULT]=WARN
         request.session[MSG]=u'操作失败，未找到简历，或简历已经被删除。'
-    return render_to_response('jianlilook.html',getSessionMsg(request,{'jianli':jianli,'jiaoyulist':jiaoyulist,'worklist':worklist}),RequestContext(request,{}))
+    return render_to_response('jianlilook.html',getSessionMsg(request,{'obj':jianli,'objtype':'jianli','jiaoyulist':jiaoyulist,'worklist':worklist}),RequestContext(request,{}))
 
 
 
@@ -393,3 +400,59 @@ def savecompany(request):
     request.session[RESULT]=SUCCESS
     request.session[MSG]=u'保存成功。'
     return render_to_response('business.html',getSessionMsg(request,{'business':business}),RequestContext(request,{}))
+
+
+def jianliRecodelook(request):
+    '''
+    保存公司信息
+    '''
+    start=request.REQUEST.get('start',1)
+    start=int(start)
+    id=request.GET.get('jianli_id','')
+    jianli=JianLi.objects.get(pk=id)
+    list=LookRecord.objects.filter(jianli=jianli)
+    page=Paginator(list,20)
+    currentpage=page.page(start)
+
+
+    return render_to_response('businesslist.html',getSessionMsg(request,{'jianli':jianli,'list':list}),RequestContext(request,{}))
+
+
+
+def companylook(request):
+    '''
+    保存公司信息
+    '''
+    id=request.GET.get('company_id','')
+    business=Business.objects.get(pk=id)
+    list=ZhiWei.objects.filter(user=business.user).filter(ispub=True)
+    closelist=ZhiWei.objects.filter(user=business.user).filter(ispub=False)
+
+
+    return render_to_response('businesslook.html',getSessionMsg(request,{'business':business,'list':list,'closelist':closelist}),RequestContext(request,{}))
+
+
+@login_required
+def replayAdd(request):
+    if hasattr(request,'environ'):
+        fromurl=request.environ.get('HTTP_REFERER','/')
+    if hasattr(request,'META'):
+        fromurl=request.META.get('HTTP_REFERER','/')
+    type=request.POST.get('type','')
+    content=request.POST.get('content','')
+    content=content.replace('<','&lt;')
+    content=content.replace('>','&gt;')
+    face=request.POST.get('face','')
+    pk=request.POST.get('pk','')
+    if pk and content and type:
+        replay=Replay()
+        replay.user=request.user
+        replay.objid=int(pk)
+        if face:
+            replay.face=int(face)
+        replay.content=content
+        replay.save()
+    return HttpResponseRedirect(fromurl)
+
+def replayList(request):
+    type=request.POST.get('type','')

@@ -13,23 +13,29 @@ $j(function(){
         <table id="jianli_table" class="table0 bigtable tdpadding tablemargin" width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr >
                 <td align="left" colspan="4">
-                    <b>{{ jianli.name|default_if_none:"" }}</b><input type="hidden" name="id" value="{{ jianli.id|default_if_none:"" }}">
-                    <div style="float: right;margin-right: 10px;"><input type="button" style="width: 100px;" value="分享到微博" onclick="fenxiang()" ></div>
+                    <div style="float: left;margin-right: 10px;"><!-- 将此标记放在您希望显示like按钮的位置 -->
+                    <div class="bdlikebutton"></div>
+                   </div>
                 </td>
             </tr>
-            
+            <tr >
+                <td align="left" colspan="4">
+                    <b>{{ obj.name|default_if_none:"" }}</b><input type="hidden" name="id" value="{{ obj.id|default_if_none:"" }}">
+                </td>
+            </tr>
+
             <tr>
-                <td align="right">
+                <td align="right" width="100px">
                      姓名:
                 </td>
-                <td align="left">
-                    {{ jianli.username|default_if_none:"" }}
+                <td align="left" width="400px">
+                    {{ obj.username|default_if_none:"" }}
                 </td>
-                <td align="right">
+                <td align="right" width="100px">
                     性别:
                 </td>
                 <td align="left">
-                    {% if jianli.sex  %} 男{% else %}女{% endif %}
+                    {% if obj.sex  %} 男{% else %}女{% endif %}
                 </td>
             </tr>
             <tr>
@@ -37,13 +43,13 @@ $j(function(){
                     出生日期:
                 </td>
                 <td align="left">
-                    {{ jianli.age|date:"Y-m-d"  }}
+                    {{ obj.age|date:"Y-m-d"  }}
                 </td>
                 <td align="right">
                     工作年龄:
                 </td>
                 <td align="left">
-                    {{ jianli.workage|default_if_none:"" }}
+                    {{ obj.workage|default_if_none:"" }}
                 </td>
             </tr>
             <tr>
@@ -51,13 +57,13 @@ $j(function(){
                     专业:
                 </td>
                 <td align="left">
-                    {{ jianli.zhuanye|default_if_none:"" }}
+                    {{ obj.zhuanye|default_if_none:"" }}
                 </td>
                 <td align="right">
                     民族:
                 </td>
                 <td align="left">
-                    {{ jianli.minzu|default_if_none:"" }}
+                    {{ obj.minzu|default_if_none:"" }}
                 </td>
             </tr>
             <tr>
@@ -65,18 +71,18 @@ $j(function(){
                     学位:
                 </td>
                 <td align="left">
-                    {% ifequal jianli.xuewei '6' %}博士{% endifequal %}
-                    {% ifequal jianli.xuewei '5' %}硕士{% endifequal %}
-                    {% ifequal jianli.xuewei '4' %}大学{% endifequal %}
-                    {% ifequal jianli.xuewei '3' %}大专{% endifequal %}
-                    {% ifequal jianli.xuewei '2' %}高中{% endifequal %}
-                    {% ifequal jianli.xuewei '1' %}中专{% endifequal %}
+                    {% ifequal obj.xuewei '6' %}博士{% endifequal %}
+                    {% ifequal obj.xuewei '5' %}硕士{% endifequal %}
+                    {% ifequal obj.xuewei '4' %}大学{% endifequal %}
+                    {% ifequal obj.xuewei '3' %}大专{% endifequal %}
+                    {% ifequal obj.xuewei '2' %}高中{% endifequal %}
+                    {% ifequal obj.xuewei '1' %}中专{% endifequal %}
                 </td>
                 <td align="right">
                     工作地点:
                 </td>
                 <td align="left">
-                    {{ jianli.workadd|default_if_none:"" }}
+                    {{ obj.workadd|default_if_none:"" }}
                 </td>
             </tr>
             <tr>
@@ -84,13 +90,13 @@ $j(function(){
                     手机号:
                 </td>
                 <td align="left">
-                    {{ jianli.tel|default_if_none:"" }}
+                    {{ obj.tel|default_if_none:"" }}
                 </td>
                 <td align="right">
                     电子邮件:
                 </td>
                 <td align="left">
-                    {{ jianli.email|default_if_none:"" }}
+                    {{ obj.email|default_if_none:"" }}
                 </td>
             </tr>
             <tr>
@@ -98,7 +104,7 @@ $j(function(){
                     自我描述：
                 </td>
                 <td align="left" colspan="3">
-                    {{ jianli.desc|default_if_none:"" }}
+                    {{ obj.desc|default_if_none:"" }}
                 </td>
 
             </tr>
@@ -157,13 +163,28 @@ $j(function(){
         {% endfor %}
             <tr>
                 <td align="right" colspan="4">
-                    <div style="float: right;margin-right: 10px;"><input type="button" style="width: 100px;" value="分享到微博"  onclick="fenxiang()" ></div>{% csrf_token %}
+                    <div style="float: left;margin-left: 10px;"><div class="bdlikebutton"></div></div>{% csrf_token %}
                 </td>
 
             </tr>
         </table>
     </form>
     </div>
-
-
+    <div class="con_center" >
+            {% include 'comment/comment.html' %}
+        </div>
+    <div class="con_center" >
+            {% include 'comment/commentlist.html' %}
+        </div>
+    <!-- 将此代码放在适当的位置，建议在body结束前 -->
+                       <script id="bdlike_shell"></script>
+                       <script>
+                       var bdShare_config = {
+                       	"type":"small",
+                       	"color":"blue",
+                       	"uid":"1883581",
+                       	"share":"yes"
+                       };
+                       document.getElementById("bdlike_shell").src="http://bdimg.share.baidu.com/static/js/like_shell.js?t=" + Math.ceil(new Date()/3600000);
+                       </script>
 {% endblock  %}

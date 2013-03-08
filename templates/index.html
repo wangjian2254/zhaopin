@@ -42,7 +42,14 @@
             <h1></h1>
         </div>
         <div class="con_c_right">
-            <h2></h2>
+            <h2>最近更新的简历</h2>
+            {% for work in newjianlilist %}
+                <span style="float: left;text-align: left;margin-bottom: 10px;margin-top: 5px;">
+                    <a href="/lookjianli?jianli_id={{ work.id }}" target="_blank"><span>{{ forloop.counter }}.</span>
+                    <span>{{ work.name }}</span>
+                    <span  style="font: 9px;">[{{ work.updatetime|date:'Y-m-d' }}]</span></a>
+                </span>
+            {% endfor %}
 
         </div>
     </div>

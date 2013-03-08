@@ -2,6 +2,7 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+    <meta http-equiv="cache-control" content="no-cache"/>
     {% block title %}
         <title>人才招聘系统</title>
     {% endblock  %}
@@ -17,6 +18,7 @@
         {% endif %}
         <link href="/media/css/default.css" rel="stylesheet" type="text/css">
         <link href="/media/css/style.css" rel="stylesheet" type="text/css">
+        <link href="/media/css/commitlist.css" rel="stylesheet" type="text/css">
     {% endblock  %}
     {% block basejs %}
         {% if session_user %}
@@ -32,7 +34,7 @@
             <script src="/media/js/val.js"></script>
             <script src="/media/js/artDialog.source.js?skin=blue"></script>
             <script src="/media/js/iframeTools.source.js"></script>
-            <script src="/media/Datepicker4.6/WdatePicker.js"></script>
+            <script src="/media/date/WdatePicker.js"></script>
         {% endif %}
     {% endblock  %}
 </head>

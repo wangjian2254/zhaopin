@@ -37,7 +37,7 @@ class JianLi(models.Model):#简历
     email=models.EmailField(verbose_name=u'电子邮件')
     xuewei=models.CharField(max_length=10,verbose_name=u'学位')
     workadd=models.CharField(max_length=10,verbose_name=u'工作地点')
-    desc=models.CharField(max_length=500,verbose_name=u'自我描述')
+    desc=models.CharField(max_length=2000,verbose_name=u'自我描述')
     looknum=models.IntegerField(default=0,verbose_name=u'被浏览次数')
     ispub=models.BooleanField(default=True,verbose_name=u'是否公开')
 
@@ -74,7 +74,7 @@ class ZhiWei(models.Model):
     workage=models.IntegerField(verbose_name=u'最低工作年龄',help_text=u'该职位需要最低工作年龄')
     price1=models.IntegerField(verbose_name=u'薪水范围起',blank=True,null=True,help_text=u'提供的薪水范围')
     price2=models.IntegerField(verbose_name=u'薪水范围止',blank=True,null=True,help_text=u'提供的薪水范围')
-    desc=models.CharField(max_length=500,verbose_name=u'自我描述')
+    desc=models.CharField(max_length=2000,verbose_name=u'自我描述')
     looknum=models.IntegerField(default=0,verbose_name=u'被浏览次数')
     ispub=models.BooleanField(default=True,verbose_name=u'是否公开')
     updatetime=models.DateTimeField(auto_now=True,verbose_name=u'最后修改时间')
@@ -85,16 +85,39 @@ class WorkLookRecord(models.Model):
     user=models.ForeignKey(User,verbose_name=u'浏览者')
     updatetime=models.DateTimeField(auto_created=True)
 
+class Replay(models.Model):
+    user=models.ForeignKey(User)
+    face=models.IntegerField(default=1,verbose_name=u'表情')
+    objid=models.IntegerField(verbose_name=u'评论的目标id')
+    type=models.CharField(max_length=10,verbose_name=u'评论主体',help_text=u'jianli、work')
+    content=models.CharField(max_length=500,verbose_name=u'评论内容')
+    updatetime=models.DateTimeField(auto_now=True,verbose_name=u'评论时间')
+
 
 
 class Column(models.Model):
     name=models.CharField(max_length=10,verbose_name=u'栏目名称')
     code=models.CharField(max_length=10,verbose_name=u'栏目代码',help_text=u'templates 中使用')
+    class Admin():
+        pass
+    class Meta():
+        verbose_name='栏目'
+        verbose_name_plural='栏目'
 
+    def __unicode__(self):
+        return self.name
 class News(models.Model):
     title=models.CharField(max_length=50,verbose_name=u'标题')
+    column=models.ForeignKey(Column)
     content=models.TextField(verbose_name=u'内容',blank=True,null=True)
-    updatetime=models.DateTimeField(auto_created=True)
+    updatetime=models.DateTimeField(auto_created=True,verbose_name=u'最后修改日期')
     ispub=models.BooleanField(default=True,verbose_name=u'是否公开')
+    class Admin():
+        pass
+    class Meta():
+        verbose_name='文章'
 
+#        verbose_name_plural='项目组'
+    def __unicode__(self):
+        return self.title
 

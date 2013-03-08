@@ -20,112 +20,26 @@ $j(function(){
             </tr>
             <tr >
                 <td align="left" colspan="4">
-                    <b>职位信息</b><input type="hidden" name="id" value="{{ obj.id|default_if_none:"" }}">
+                    <b>公司信息</b><input type="hidden" name="id" value="{{ obj.id|default_if_none:"" }}">
                     <div style="float: right;margin-right: 10px;"><input type="button" style="width: 100px;" value="分享到微博" onclick="fenxiang()" ></div>
                 </td>
             </tr>
-            
-            <tr>
-                <td align="left" >
-                     职位名称:
-                </td>
-
-
-                <td align="left" colspan="3">
-                    {{ obj.zhiwei|default_if_none:"" }}
-                </td>
-
-            </tr>
-            <tr>
-                <td align="right" width="100px">
-                     公司名称:
-                </td>
-                <td align="left" width="400px">
-                    {{ obj.user.business.name|default_if_none:"" }}
-                </td>
-                <td align="right" width="100px">
-                    招聘数量:
-                </td>
-                <td align="left">
-                    {{ obj.num }}人
-                </td>
-            </tr>
-            <tr>
-                <td align="right">
-                    工作地点:
-                </td>
-                <td align="left">
-                    {{ obj.workadd  }}
-                </td>
-                <td align="right">
-                    工作年龄:
-                </td>
-                <td align="left">
-                    {{ obj.workage|default_if_none:"" }}
-                </td>
-            </tr>
-            <tr>
-                <td align="right">
-                    工作性质:
-                </td>
-                <td align="left">
-                    {% ifequal obj.xingzhi "qz" %}全职{% endifequal %}
-                    {% ifequal obj.xingzhi "jz" %}兼职{% endifequal %}
-                    {% if not obj.xingzhi  %}全职、兼职皆可{% endif %}
-                </td>
-                <td align="right">
-                    薪资:
-                </td>
-                <td align="left">
-                    {% if not obj.price1 and not obj.price2 %}面议{% else %}{{ obj.price1 }}~{{ obj.price2 }}元{% endif %}
-                </td>
-            </tr>
-            <tr>
-                <td align="right">
-                    最后修改日期:
-                </td>
-                <td align="left">
-                    {{ obj.updatetime|date:"Y-m-d"  }}
-                </td>
-                <td align="right">
-                    查看次数:
-                </td>
-                <td align="left">
-                    {{ obj.looknum|default_if_none:"0" }}
-                </td>
-            </tr>
-            <tr>
-                <td align="left" colspan="4">
-                    职位描述
-                </td>
-            </tr>
-                        <tr>
-                <td align="left" colspan="4">
-                    {{ obj.desc|default_if_none:"" }}
-                </td>
-
-            </tr>
-            <tr >
-               <td align="left" colspan="4">
-                   <b>公司信息</b>
-               </td>
-           </tr>
             <tr>
                 <td align="right">
                     公司名称:
                 </td>
-                <td align="left" colspan="3"  class="btn">
-                    <a href="/lookcompany?company_id={{ business.id }}" target="_blank">{{ business.name }}</a>
+                <td align="left" colspan="3">
+                    {{ business.name }} 
                 </td>
             </tr>
             <tr>
-                <td align="right">
+                <td align="right" width="100px">
                     公司规模:
                 </td>
-                <td align="left">
+                <td align="left"  width="400px">
                     {{ business.num }} 
                 </td>
-                <td align="right">
+                <td align="right"  width="100px">
                     公司性质:
                 </td>
                 <td align="left">
@@ -151,6 +65,48 @@ $j(function(){
                    {{ business.desc }}
                </td>
            </tr>
+            <tr >
+                <td align="left" colspan="4">
+                    <b>正在招聘的职位</b>
+                </td>
+            </tr>
+            {% for work in list %}
+            <tr >
+                <td align="center">
+                        {{ forloop.counter }}
+                    </td>
+                    <td align="left" class="btn" >
+                        <a  href="/lookwork?work_id={{ work.id }}" target="_blank">{{ work.zhiwei|default_if_none:"" }}</a>
+                    </td>
+                    <td align="center">
+                       {{ work.num }}人
+                   </td>
+                    <td align="center">
+                       {{ work.updatetime|date:"Y-m-d" }}
+                   </td>
+            </tr>
+            {% endfor %}
+            <tr >
+                <td align="left" colspan="4">
+                    <b>历史上招聘的职位[已经关闭]</b>
+                </td>
+            </tr>
+            {% for work in closelist %}
+            <tr >
+                <td align="center">
+                    {{ forloop.counter }}
+                </td>
+                <td align="left" >
+                    {{ work.zhiwei|default_if_none:"" }}
+                </td>
+                <td align="center">
+                   {{ work.num }}人
+               </td>
+                <td align="center">
+                   {{ work.updatetime|date:"Y-m-d" }}
+               </td>
+            </tr>
+            {% endfor %}
             <tr >
                 <td align="left" colspan="4">
                     <div style="float: left;margin-right: 10px;"><!-- 将此标记放在您希望显示like按钮的位置 -->

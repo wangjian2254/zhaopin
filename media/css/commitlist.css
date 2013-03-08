@@ -1,0 +1,214 @@
+.del{
+margin-bottom: 10px;
+width: 900px;
+text-align: left;
+background-color: red;
+}
+.l{
+
+width: 900px;
+text-align: left;
+background-color: #bbe1ff;
+padding-left:15px;
+padding-right:15px;
+}
+.d{
+
+width: 900px;
+text-align: left;
+display: block;
+background-color: #dff1ff;
+padding-left:15px;
+padding-right:15px;
+}
+.df{
+
+width: 900px;
+text-align: left;
+display: block;
+padding-left:15px;
+padding-right:15px;
+}
+.dd{
+margin-bottom: 10px;
+width: 900px;
+height: 30px;
+line-height: 30px;
+
+text-align:right;
+
+}
+.supera{
+text-align: center;
+font-size: 23px;
+}
+.supera span{
+margin-left: 5px;
+font-size: 23px;
+}
+.supera a{
+margin-left: 5px;
+font-size: 23px;
+
+}
+
+.dd a{
+
+font-weight:bold;
+
+}
+.pingjia0{
+width: 100%;
+display: block;
+height: 40px;
+text-align: right;
+}
+.pingjia0 a{
+margin-left: 10px;
+}
+.pingjia0 span{
+margin-left: 10px;
+}
+.ff{
+
+position:fixed !important;
+position:absolute;
+bottom:100;_bottom:expression(eval(document.compatMode && document.compatMode=='CSS1Compat') ? documentElement.scrollHeight-100 : document.body.scrollHeight-100  );
+
+}
+
+.ff a{
+
+font-size:12px;
+color:#333333;
+ line-height: 14px;
+ text-decoration:none;
+
+}
+
+
+
+.commentlist{
+width:100%;
+float: left;
+
+}
+.replaylist{
+width:100%;
+float: right;
+
+}
+.top{
+height:15px;
+}
+.bottom{
+height:16px;
+}
+.commenttl{
+background:url("/media/img/i/yellowl.png") no-repeat -0px -0px;
+height:15px;
+width:22px;
+}
+.commentt{
+background:url("/media/img/i/yellowtop.png") repeat-x;
+
+}
+.commenttr{
+background:url("/media/img/i/yellowl.png") no-repeat -25px -0px;height:15px;width:18px;
+
+}
+.commentl{
+background:url("/media/img/i/yellowleft.png") repeat-y;
+width:17px;
+}
+.commentc{
+background-color:#ebd134;
+max-width:400px;
+}
+.commentr{
+background:url("/media/img/i/yellowright.png") repeat-y;
+width:16px;
+}
+.commentbl{
+background:url("/media/img/i/yellowl.png") no-repeat -0px -16px;height:16px;width:22px;
+}
+.commentb{
+background:url("/media/img/i/yellowbottom.png") repeat-x;
+height:16px;
+}
+.commentbr{
+background:url("/media/img/i/yellowl.png") no-repeat -25px -16px;height:16px;width:18px;
+}
+.commentlist{
+width:100%;
+float: left;
+
+}
+
+.commentrtl{
+background:url("/media/img/w/white.png") no-repeat -0px -0px;
+height:15px;
+width:18px;
+}
+.commentrt{
+background:url("/media/img/w/whitetop.png") repeat-x;
+
+}
+.commentrtr{
+background:url("/media/img/w/white.png") no-repeat -21px -0px;height:15px;width:22px;
+
+}
+.commentrl{
+background:url("/media/img/w/whiteleft.png") repeat-y;
+width:16px;
+}
+.commentrc{
+background-color:#f5f5f5;
+max-width:400px;
+}
+.commentrr{
+background:url("/media/img/w/whiteright.png") repeat-y;
+width:22px;
+}
+.commentrbl{
+background:url("/media/img/w/white.png") no-repeat -0px -16px;height:16px;width:18px;
+}
+.commentrb{
+background:url("/media/img/w/whitebottom.png") repeat-x;
+height:16px;
+}
+.commentrbr{
+background:url("/media/img/w/white.png") no-repeat -21px -16px;height:16px;width:22px;
+}
+.leftcomment{
+width:200px;
+table-layout: fixed;
+word-wrap:break-word;
+word-break:break-all;
+}
+.lefttd{
+padding-left:15px;
+padding-right:15px;
+}
+.headRss{
+margin-left:50px;padding-top:5px;width:100%;float:left;
+}
+
+#replaytext p{
+color: red;
+}
+
+
+.commit_btn{
+	display:block;
+	width:87px;
+	height:29px;
+	line-height:29px;
+	color:#fff;
+	text-align:center;
+	background:url(../images/main/login_btn2.gif) repeat-x 0px 0px;
+
+	font-weight:bold;
+	font-size:13px;
+	margin-left:10px;
+}

@@ -1,0 +1,129 @@
+<form action="/joke/commentAdd" method="post" id="jokeform">
+    <a name="replay"></a>
+
+<table cellpadding="0" cellspacing="0" width="900px" >
+    <tr>
+        <td height="45px" align="right">
+            昵称：
+        </td>
+        <td id="nickname">{{user.username}}</td>
+    </tr>
+    <tr>
+        <td height="55px" align="right">
+            头像：<input type="hidden" name="face" value="1" id="face"/>
+
+            <script type="text/javascript">
+                function selectFace(facename){
+                    for(var i=1;i<8;i++){
+                        document.getElementById('td'+i).style.background='#ffffff';
+                    }
+                    var facetd=document.getElementById('td'+facename);
+                    facetd.style.background='#c0c0c0';
+                    document.getElementById('face').value=facename;
+                }
+            </script>
+        </td>
+        <td align="right">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                    <td id="td1" style="background: #c0c0c0" align="center"><a href="javascript:selectFace('1')"><img src="/media/img/default/face/face1.gif" width="48px" height="48px" border="0"/></a></td>
+                    <td id="td2"  align="center"><a href="javascript:selectFace('2')"><img src="/media/img/default/face/face2.gif" width="48px" height="48px" border="0"/></a></td>
+                    <td id="td3"  align="center"><a href="javascript:selectFace('3')"><img src="/media/img/default/face/face3.gif" width="48px" height="48px" border="0"/></a></td>
+                    <td id="td4"  align="center"><a href="javascript:selectFace('4')"><img src="/media/img/default/face/face4.gif" width="48px" height="48px" border="0"/></a></td>
+                    <td id="td5"  align="center"><a href="javascript:selectFace('5')"><img src="/media/img/default/face/face5.gif" width="48px" height="48px" border="0"/></a></td>
+                    <td id="td6"  align="center"><a href="javascript:selectFace('6')"><img src="/media/img/default/face/face6.gif" width="48px" height="48px" border="0"/></a></td>
+                    <td id="td7"  align="center"><a href="javascript:selectFace('7')"><img src="/media/img/default/face/face7.gif" width="48px" height="48px" border="0"/></a></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">
+            内容：
+        </td>
+        <td>
+            <textarea rows="8" style="width: 75%" name="content"></textarea>
+        </td>
+    </tr>
+    <tr height="45px">
+        <td colspan="2" align="center">
+            <a href="#" class="commit_btn" onclick="onSubmitJoke();">评论</a>
+        <input type="hidden" name="type" value="{{ objtype }}">
+           {% if obj%}<input type="hidden" name="pk" value="{{obj.pk}}"/>{% endif%}<input id="commentid" type="hidden" name="commentid">
+        </td>
+    </tr>
+</table>
+</form>
+<script type="text/javascript">
+    $(function(){
+        $.ajax({type: "POST",
+                    url: "/replay/{{ obj.pk }}",
+                    data:{pk:"{{ obj.pk }}",'type':'{{ objtype }}'},
+                    dataType:'json',
+                    async: true,
+                    success: function(data){
+                           if(data.success){
+                               //$('#showNumFont').html(data.showNum);
+                               $('#replayNumFont').html("共有 "+data.replaynum+" 评论");
+                           }
+                    }
+
+                })
+        getReplay();
+        $.ajax({type: "POST",
+                        url: "/joke/getUser",
+                        dataType:'json',
+                        async: true,
+                        success: function(data){
+                               if(data.success){
+                                   $('#nickname').html(data.nickname);
+                               }
+                        }
+
+                    });
+    });
+    function loginOrReg(){
+        art.dialog.open("/joke/login",{id:'showFenXiang',title: '登陆',lock: true, width: 600, height:400});
+
+    }
+    function sub(){
+        $.ajax({type: "GET",
+                url: "/joke/commentAdd",
+                data:{code:$('#imagecode')[0].value,codename:"{{uuid}}"},
+                dataType:'json',
+                async: true,
+                success: function(data){
+                       if(data.success){
+                           //$('#showNumFont').html(data.showNum);
+                           $('#jokeform')[0].submit();
+
+                       }else{
+                           art.dialog({title:'提示',content:data.msg,icon:'warning',lock: true,ok:true});
+                       }
+                }
+
+            });
+    }
+    function onSubmitJoke(){
+        if($('#nickname').html()==''){
+            $.ajax({type: "POST",
+                url: "/joke/getUser",
+                dataType:'json',
+                async: true,
+                success: function(data){
+                       if(data.success){
+                           //$('#showNumFont').html(data.showNum);
+                           $('#nickname').html(data.nickname);
+                           sub();
+
+                       }else{
+                           loginOrReg();
+                       }
+                }
+
+            });
+        }else{
+            sub();
+        }
+    }
+</script>
