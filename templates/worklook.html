@@ -1,4 +1,7 @@
 {% extends "basepage/basepage.html" %}
+{% block title %}
+    <title>{{ obj.zhiwei|default_if_none:"" }}_{{ obj.user.business.name|default_if_none:"" }}</title>
+{% endblock  %}
 {% block content %}
 <script type="text/javascript">
     function fenxiang(){
@@ -88,7 +91,7 @@ $j(function(){
                     {{ obj.updatetime|date:"Y-m-d"  }}
                 </td>
                 <td align="right">
-                    查看次数:
+                    投简历份数:
                 </td>
                 <td align="left">
                     {{ obj.looknum|default_if_none:"0" }}

@@ -1,6 +1,7 @@
 #coding=utf-8
 # Create your views here.
 import datetime
+import urllib
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
@@ -84,13 +85,6 @@ def lookwork(request):
         businesslist=Business.objects.filter(user=work.user)[:1]
         if 1==len(businesslist):
             business=businesslist[0]
-        if request.user.is_authenticated() and hasattr(request.user,'person') and request.user.person.type==1:
-            lookrecord=WorkLookRecord()
-            lookrecord.zhiwei=work
-            lookrecord.user=request.user
-            lookrecord.updatetime=datetime.datetime.now()
-            lookrecord.save()
-            ZhiWei.objects.filter(pk=workid).update(looknum=work.looknum+1)
     else:
         request.session[RESULT]=WARN
         request.session[MSG]=u'操作失败，未找到简历，或简历已经被删除。'
@@ -122,12 +116,17 @@ def lookjianli(request):
         for j in WorkJingYan.objects.filter(jianli=jianli):
             worklist.append(j)
         if request.user.is_authenticated() and hasattr(request.user,'person') and request.user.person.type==2:
-            lookrecord=LookRecord()
-            lookrecord.jianli=jianli
-            lookrecord.user=request.user
-            lookrecord.updatetime=datetime.datetime.now()
-            lookrecord.save()
-            JianLi.objects.filter(pk=jianliid).update(looknum=jianli.looknum+1)
+            if jianli.pk not in  request.session.get('lookjianli',set()):
+                lookrecord=LookRecord()
+                lookrecord.jianli=jianli
+                lookrecord.user=request.user
+                lookrecord.updatetime=datetime.datetime.now()
+                lookrecord.save()
+                JianLi.objects.filter(pk=jianliid).update(looknum=jianli.looknum+1)
+                s=request.session.get('lookjianli',set())
+                s.add(jianli.pk)
+                request.session['lookjianli']=s
+
     else:
         request.session[RESULT]=WARN
         request.session[MSG]=u'操作失败，未找到简历，或简历已经被删除。'
@@ -413,9 +412,11 @@ def jianliRecodelook(request):
     list=LookRecord.objects.filter(jianli=jianli)
     page=Paginator(list,20)
     currentpage=page.page(start)
+    query={'jianli_id':id}
+    querystr=urllib.urlencode(query)
 
 
-    return render_to_response('businesslist.html',getSessionMsg(request,{'jianli':jianli,'list':list}),RequestContext(request,{}))
+    return render_to_response('businesslist.html',getSessionMsg(request,{'querystr':querystr,'jianli':jianli,'start':start,'page':page,'currentpage':currentpage}),RequestContext(request,{}))
 
 
 

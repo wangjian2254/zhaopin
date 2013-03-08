@@ -1,4 +1,7 @@
 {% extends "basepage/basepage.html" %}
+{% block title %}
+    <title>{{ obj.name|default_if_none:"" }}</title>
+{% endblock  %}
 {% block content %}
 <script type="text/javascript">
     function fenxiang(){

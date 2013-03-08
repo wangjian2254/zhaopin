@@ -1,4 +1,7 @@
 {% extends "basepage/basepage.html" %}
+{% block title %}
+        <title>{{ jianli.name }}/简历查看记录</title>
+{% endblock  %}
 {% block content %}
 <script type="text/javascript">
     $j(function(){
@@ -43,13 +46,40 @@
                     </td>
 
                 </tr>
-                {% for recode in list %}
+                {% for recode in currentpage.object_list %}
                 <tr>
                     <td align="center" >{{ forloop.counter }}</td>
                     <td class="btn"><a href="/lookcompany?company_id={{ recode.user.business.id }}">{{ recode.user.business.name }}</a></td>
                     <td align="center" >{{ recode.updatetime|date:"Y-m-d" }}</td>
                 </tr>
                 {% endfor %}
+                {% if not currentpage.object_list.count %}
+                    <tr>
+                    <td  align="center" colspan="3"  >
+                        没有找到数据。
+                    </td>
+                    </tr>
+                {% endif %}
+                <tr>
+                <td  align="center" colspan="3"  >
+                    <a href="#" >(当前第 {{ start }} 页,共 {{ page.num_pages }} 页)</a>&nbsp;&nbsp;&nbsp;
+                {% if currentpage.has_previous %}
+                         <a href="/jianliRecodelook?{{ querystr }}&start={{ currentpage.previous_page_number }}&limit={{ limit }}">前一页</a>
+                {% endif %}
+                {% for p in page.page_range %}
+                    {% ifequal start p %}
+                        <a href="#" style="text-decoration: underline;">{{ p }}</a>&nbsp;&nbsp;
+{#                        <a href="/jianliRecodelook?{{ querystr }}&start={{ p }}">{{ p }}</a>&nbsp;&nbsp;#}
+                    {% else %}
+                        <a href="/jianliRecodelook?{{ querystr }}&start={{ p }}">{{ p }}</a>&nbsp;&nbsp;
+                    {% endifequal %}
+                {% endfor %}
+                {% if currentpage.has_next %}
+                         <a href="/jianliRecodelook?{{ querystr }}&start={{ currentpage.next_page_number }}&limit={{ limit }}">后一页</a>
+                {% endif %}
+
+                    </td>
+                </tr>
             </table>
             </td>
             </tr>

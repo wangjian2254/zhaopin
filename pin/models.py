@@ -75,14 +75,17 @@ class ZhiWei(models.Model):
     price1=models.IntegerField(verbose_name=u'薪水范围起',blank=True,null=True,help_text=u'提供的薪水范围')
     price2=models.IntegerField(verbose_name=u'薪水范围止',blank=True,null=True,help_text=u'提供的薪水范围')
     desc=models.CharField(max_length=2000,verbose_name=u'自我描述')
-    looknum=models.IntegerField(default=0,verbose_name=u'被浏览次数')
+    looknum=models.IntegerField(default=0,verbose_name=u'投简历份数')
     ispub=models.BooleanField(default=True,verbose_name=u'是否公开')
     updatetime=models.DateTimeField(auto_now=True,verbose_name=u'最后修改时间')
 
 
 class WorkLookRecord(models.Model):
+    '''
+    对职位投递简历
+    '''
     zhiwei=models.ForeignKey(ZhiWei)
-    user=models.ForeignKey(User,verbose_name=u'浏览者')
+    jianli=models.ForeignKey(JianLi,verbose_name=u'投递的简历')
     updatetime=models.DateTimeField(auto_created=True)
 
 class Replay(models.Model):

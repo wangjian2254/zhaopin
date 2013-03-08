@@ -1,4 +1,7 @@
 {% extends "basepage/basepage.html" %}
+{% block title %}
+    <title>寻找人才</title>
+{% endblock  %}
 {% block content %}
 <script type="text/javascript">
     $j(function(){
@@ -189,9 +192,9 @@
             {% for p in page.page_range %}
                 {% ifequal start p %}
 {#                    <a href="#" style="text-decoration: underline;">{{ p }}</a>#}
-                    <a href="/SearchPeople?{{ querystr }}&start={{ p }}&limit={{ limit }}">{{ p }}</a>
+                    <a href="/SearchPeople?{{ querystr }}&start={{ p }}&limit={{ limit }}">{{ p }}</a>&nbsp;&nbsp;
                 {% else %}
-                    <a href="/SearchPeople?{{ querystr }}&start={{ p }}&limit={{ limit }}">{{ p }}</a>
+                    <a href="/SearchPeople?{{ querystr }}&start={{ p }}&limit={{ limit }}">{{ p }}</a>&nbsp;&nbsp;
                 {% endifequal %}
             {% endfor %}
             {% if currentpage.has_next %}
