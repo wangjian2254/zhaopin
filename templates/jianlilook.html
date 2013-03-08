@@ -24,6 +24,7 @@ $j(function(){
             <tr >
                 <td align="left" colspan="4">
                     <b>{{ obj.name|default_if_none:"" }}</b><input type="hidden" name="id" value="{{ obj.id|default_if_none:"" }}">
+                    <a href="#" class="commit_right_btn"  onclick="fenxiang()">分享到微博</a>
                 </td>
             </tr>
 

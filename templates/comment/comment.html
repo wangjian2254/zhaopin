@@ -1,7 +1,11 @@
-<form action="/joke/commentAdd" method="post" id="jokeform">
+<form action="/commentAdd" method="post" id="jokeform">
     <a name="replay"></a>
 
 <table cellpadding="0" cellspacing="0" width="900px" >
+    <tr>
+        <td height="45px" align="right" colspan="2" id="replayNumFont" style="padding-right: 10px;text-align: right;">
+        </td>
+    </tr>
     <tr>
         <td height="45px" align="right">
             昵称：
@@ -48,16 +52,16 @@
     <tr height="45px">
         <td colspan="2" align="center">
             <a href="#" class="commit_btn" onclick="onSubmitJoke();">评论</a>
-        <input type="hidden" name="type" value="{{ objtype }}">
+        <input type="hidden" name="type" value="{{ objtype }}">{% csrf_token %}
            {% if obj%}<input type="hidden" name="pk" value="{{obj.pk}}"/>{% endif%}<input id="commentid" type="hidden" name="commentid">
         </td>
     </tr>
 </table>
 </form>
 <script type="text/javascript">
-    $(function(){
-        $.ajax({type: "POST",
-                    url: "/replay/{{ obj.pk }}",
+    $j(function(){
+        $j.ajax({type: "POST",
+                    url: "/replay",
                     data:{pk:"{{ obj.pk }}",'type':'{{ objtype }}'},
                     dataType:'json',
                     async: true,
@@ -70,60 +74,28 @@
 
                 })
         getReplay();
-        $.ajax({type: "POST",
-                        url: "/joke/getUser",
-                        dataType:'json',
-                        async: true,
-                        success: function(data){
-                               if(data.success){
-                                   $('#nickname').html(data.nickname);
-                               }
-                        }
 
-                    });
     });
-    function loginOrReg(){
-        art.dialog.open("/joke/login",{id:'showFenXiang',title: '登陆',lock: true, width: 600, height:400});
-
-    }
-    function sub(){
-        $.ajax({type: "GET",
-                url: "/joke/commentAdd",
-                data:{code:$('#imagecode')[0].value,codename:"{{uuid}}"},
-                dataType:'json',
-                async: true,
-                success: function(data){
-                       if(data.success){
-                           //$('#showNumFont').html(data.showNum);
-                           $('#jokeform')[0].submit();
-
-                       }else{
-                           art.dialog({title:'提示',content:data.msg,icon:'warning',lock: true,ok:true});
-                       }
-                }
-
-            });
-    }
+{##}
+{#    function sub(){#}
+{#        $.ajax({type: "GET",#}
+{#                url: "/commentAdd",#}
+{#                data:{code:$('#imagecode')[0].value,codename:"{{uuid}}"},#}
+{#                dataType:'json',#}
+{#                async: true,#}
+{#                success: function(data){#}
+{#                       if(data.success){#}
+{#                           //$('#showNumFont').html(data.showNum);#}
+{#                           $('#jokeform')[0].submit();#}
+{##}
+{#                       }else{#}
+{#                           art.dialog({title:'提示',content:data.msg,icon:'warning',lock: true,ok:true});#}
+{#                       }#}
+{#                }#}
+{##}
+{#            });#}
+{#    }#}
     function onSubmitJoke(){
-        if($('#nickname').html()==''){
-            $.ajax({type: "POST",
-                url: "/joke/getUser",
-                dataType:'json',
-                async: true,
-                success: function(data){
-                       if(data.success){
-                           //$('#showNumFont').html(data.showNum);
-                           $('#nickname').html(data.nickname);
-                           sub();
-
-                       }else{
-                           loginOrReg();
-                       }
-                }
-
-            });
-        }else{
-            sub();
-        }
+        $('#jokeform')[0].submit();
     }
 </script>

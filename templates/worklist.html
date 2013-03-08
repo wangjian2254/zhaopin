@@ -51,7 +51,7 @@
                         最后修改日期
                     </td>
                     <td width="80px" align="center" >
-                        被浏览次数
+                        投递简历份数
                     </td>
                     <td width="80px" align="center" >
                         状态
@@ -63,9 +63,9 @@
                 {% for work in list %}
                 <tr>
                     <td align="center" >{{ forloop.counter }}</td>
-                    <td><a href="/lookwork?work_id={{ work.pk }}">{{ work.zhiwei }}</a></td>
+                    <td class="btn"><a href="/lookwork?work_id={{ work.pk }}">{{ work.zhiwei }}</a></td>
                     <td align="center" >{{ work.updatetime|date:"Y-m-d" }}</td>
-                    <td align="center" >{{ work.looknum }}</td>
+                    <td align="center" class="btn"><a href="/toudilist?work_id={{ work.pk }}" target="_blank">{{ work.looknum }}</a></td>
                     <td align="center"class="btn" ><a href="#"  onclick="confirm_alert2('warn','要将 {{ work.zhiwei }} 职位 设为：{% if work.ispub %}不公开{% else %}公开{% endif %} ?','/pubwork?work_id={{ work.pk }}')">{% if work.ispub %}公开{% else %}不公开{% endif %}</a></td>
                     <td align="center" class="btn" ><a href="#"  onclick="confirm_alert2('warn','要修改职位：{{ work.zhiwei }} ?','/addwork?work_id={{ work.pk }}')">修改</a></td>
                 </tr>

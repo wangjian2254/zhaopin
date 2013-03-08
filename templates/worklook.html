@@ -7,6 +7,9 @@
     function fenxiang(){
         art.dialog.open("/fenxiangweibo",{id:'showFenXiang',title: '发布微博',lock: true, width: 600, height:350});
     }
+    function toudi(uid,work_id){
+        art.dialog.open("/selectJianli?work_id="+work_id+"&uid="+uid,{id:'selectJianli',title: '投递简历',lock: true, width: 600, height:450});
+    }
 $j(function(){
     result_alert2('{{ result }}','{{ msg }}');
 });
@@ -24,7 +27,14 @@ $j(function(){
             <tr >
                 <td align="left" colspan="4">
                     <b>职位信息</b><input type="hidden" name="id" value="{{ obj.id|default_if_none:"" }}">
-                    <div style="float: right;margin-right: 10px;"><input type="button" style="width: 100px;" value="分享到微博" onclick="fenxiang()" ></div>
+                    <div style="float: right;margin-right: 10px;">
+                        <a href="#" class="commit_right_btn"  onclick="fenxiang()">分享到微博</a>
+                        {% if user.is_authenticated %}{% ifequal user.person.type 1 %}
+                        <a href="#" class="commit_right_btn" onclick="toudi('{{ user.pk }}','{{ obj.pk }}')" >投递简历</a>
+                        {% endifequal %}
+                        {% endif %}
+{#                        <input type="button" style="width: 100px;" value="分享到微博" onclick="fenxiang()" >#}
+                    </div>
                 </td>
             </tr>
             

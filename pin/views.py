@@ -1,12 +1,14 @@
 #coding=utf-8
 # Create your views here.
 import datetime
+import json
 import urllib
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
+from django.views.decorators.csrf import csrf_exempt
 from zhaopin.pin.models import Replay
 from zhaopin.pin.models import LookRecord, ZhiWei, WorkLookRecord, Business
 from zhaopin.pin.models import JianLi, JiaoYu, WorkJingYan
@@ -91,6 +93,46 @@ def lookwork(request):
     return render_to_response('worklook.html',getSessionMsg(request,{'obj':work,'objtype':'work','business':business}),RequestContext(request,{}))
 
 
+@login_required
+@csrf_exempt
+def toudijianli(request):
+    uid=request.REQUEST.get('uid','')
+    work_id=request.REQUEST.get('work_id','')
+    jianli_id=request.REQUEST.get('jianli_id','')
+    if 1==ZhiWei.objects.filter(pk=work_id).count() and 1==JianLi.objects.filter(pk=jianli_id).count():
+        worklook=WorkLookRecord()
+        worklook.jianli=JianLi.objects.get(pk=jianli_id)
+        worklook.zhiwei=ZhiWei.objects.get(pk=work_id)
+        if 0<WorkLookRecord.objects.filter(jianli=worklook.jianli).filter(zhiwei=worklook.zhiwei).count():
+            return HttpResponse('{"success":false,"msg":"%s"}'%(u'已经投递过简历了。',))
+
+        worklook.updatetime=datetime.datetime.now()
+        worklook.save()
+        return HttpResponse('{"success":true,"msg":"%s"}'%(u'提交简历完成。',))
+    else:
+        return HttpResponse('{"success":false,"msg":"%s"}'%(u'职位或者简历不存在。',))
+
+
+@login_required
+def selectJianli(request):
+    work_id=request.GET.get('work_id','')
+    uid=request.GET.get('uid','')
+    list=JianLi.objects.filter(user=request.user)
+    return render_to_response('selectJianli.html',{'uid':uid,'work':work_id,'list':list})
+
+@login_required
+def toudilist(request):
+    start=request.REQUEST.get('start',1)
+    start=int(start)
+    work_id=request.REQUEST.get('work_id','')
+    work=ZhiWei.objects.get(pk=work_id)
+    list=WorkLookRecord.objects.filter(zhiwei=work)
+    page=Paginator(list,20)
+    currentpage=page.page(start)
+    query={'work_id':work_id}
+    querystr=urllib.urlencode(query)
+
+    return render_to_response('toudijianlilist.html',{'querystr':querystr,'work':work,'page':page,'currentpage':currentpage},RequestContext(request,{}))
 
 @login_required
 def jianlilist(request):
@@ -434,7 +476,7 @@ def companylook(request):
 
 
 @login_required
-def replayAdd(request):
+def commentAdd(request):
     if hasattr(request,'environ'):
         fromurl=request.environ.get('HTTP_REFERER','/')
     if hasattr(request,'META'):
@@ -452,8 +494,31 @@ def replayAdd(request):
         if face:
             replay.face=int(face)
         replay.content=content
+        replay.type=type
         replay.save()
     return HttpResponseRedirect(fromurl)
 
-def replayList(request):
+@csrf_exempt
+def replay(request):
+    objid=request.POST.get('pk','')
     type=request.POST.get('type','')
+    replaynum=Replay.objects.filter(objid=int(objid)).filter(type=type).count()
+    return  HttpResponse('{"success":true,"replaynum":%s}'%replaynum)
+
+@csrf_exempt
+def commentList(request):
+    type=request.POST.get('type','')
+    objid=request.POST.get('pk','')
+    replaylist=[]
+    for replay in Replay.objects.filter(type=type).filter(objid=objid).order_by('-updatetime'):
+        rmap={}
+        rmap['id']=replay.pk
+        rmap['face']=replay.face
+        rmap['content']=replay.content
+        rmap['createDate']=replay.updatetime.strftime('%Y年%m月%d日 %H:%M:%S')
+        rmap['fatherid']=replay.father_id
+        rmap['userid']=replay.user.pk
+        rmap['username']=replay.user.username
+        replaylist.append(rmap)
+    html=json.dumps(replaylist)
+    return  HttpResponse(html)

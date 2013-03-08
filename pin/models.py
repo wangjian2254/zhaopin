@@ -92,6 +92,7 @@ class Replay(models.Model):
     user=models.ForeignKey(User)
     face=models.IntegerField(default=1,verbose_name=u'表情')
     objid=models.IntegerField(verbose_name=u'评论的目标id')
+    father_id=models.IntegerField(verbose_name=u'对评论的评论',blank=True,null=True)
     type=models.CharField(max_length=10,verbose_name=u'评论主体',help_text=u'jianli、work')
     content=models.CharField(max_length=500,verbose_name=u'评论内容')
     updatetime=models.DateTimeField(auto_now=True,verbose_name=u'评论时间')

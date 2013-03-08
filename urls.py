@@ -5,7 +5,8 @@ from django.contrib import admin
 from django.contrib.auth.views import login, logout
 from zhaopin.pin.loginviews import reg, reg2
 from zhaopin import settings
-from zhaopin.pin.views import index,jianliRecodelook,jianlilist,addjianli,deljianli,savejianli,pubjianli,lookjianli,worklist,addwork,savework,pubwork,lookwork,updatecompany,savecompany,companylook
+from zhaopin.pin.views import commentAdd,commentList,replay
+from zhaopin.pin.views import index,toudijianli,toudilist,selectJianli,jianliRecodelook,jianlilist,addjianli,deljianli,savejianli,pubjianli,lookjianli,worklist,addwork,savework,pubwork,lookwork,updatecompany,savecompany,companylook
 from zhaopin.pin.searchView import searchWork,searchPeople
 admin.autodiscover()
 
@@ -14,6 +15,9 @@ urlpatterns = patterns('',
     (r'^$', index),
     (r'^SearchWork', searchWork),
     (r'^SearchPeople', searchPeople),
+    (r'^replay', replay),
+    (r'^commentAdd', commentAdd),
+    (r'^commentList', commentList),
     (r'^jianlilist$', jianlilist),
     (r'^worklist$', worklist),
     (r'^addwork', addwork),
@@ -24,11 +28,14 @@ urlpatterns = patterns('',
     (r'^pubjianli', pubjianli),
     (r'^pubwork', pubwork),
     (r'^jianliRecodelook', jianliRecodelook),
+    (r'^toudilist', toudilist),
     (r'^lookcompany', companylook),
     (r'^updatecompany', updatecompany),
     (r'^savecompany', savecompany),
     (r'^lookjianli', lookjianli),
     (r'^lookwork', lookwork),
+    (r'^selectJianli', selectJianli),
+    (r'^toudijianli', toudijianli),
     (r'^savejianli', savejianli),
     # url(r'^zhaopin/', include('zhaopin.foo.urls')),
     (r'^Reg/$',reg),

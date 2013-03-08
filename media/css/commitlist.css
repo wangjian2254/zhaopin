@@ -212,3 +212,16 @@ color: red;
 	font-size:13px;
 	margin-left:10px;
 }
+.commit_right_btn{
+	display:block;
+	width:87px;
+	height:29px;
+	line-height:29px;
+	color:#fff;
+	text-align:center;
+	background:url(../images/main/login_btn2.gif) repeat-x 0px 0px;
+    float: right;
+	font-weight:bold;
+	font-size:13px;
+	margin-left:10px;
+}

@@ -1,0 +1,90 @@
+{% extends "basepage/basepage.html" %}
+{% block title %}
+    <title>简历列表</title>
+{% endblock  %}
+{% block content %}
+<script type="text/javascript">
+    $j(function(){
+        result_alert2('{{ result }}','{{ msg }}');
+    });
+</script>
+    <div class="con_center" >
+
+            <div style="width: 100%;">
+            <table class="tablemargin" width="100%" height="100%" border="0" cellspacing="0"
+                			cellpadding="0">
+            <tr>
+                <td height="32" class="table1">
+                    <div class="content_title">
+                        <span> <b>{{ work.zhiwei }} 职位投递的简历</b></span>
+                        <div class="title_form600">
+
+                            <a href="/worklist" class="add_btn"><div class="btn_style1"
+                             style="background:url(/media/images/btn_add.gif) no-repeat 0 0;"
+                             onmouseover="this.style.backgroundPosition='0 -24px'"
+                             onmouseout="this.style.backgroundPosition='0 0'"
+                             onmousedown="this.style.backgroundPosition='0 -48px'"
+                             onmouseup="this.style.backgroundPosition='0 -24px'">职位列表</div></a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td valign="top">
+            <table id="jianlilist" class="table0 tdpadding" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr >
+                <td width="50px" align="center"  >
+                        序号
+                    </td>
+                    <td align="center" >
+                        职位名称
+                    </td>
+                    <td width="100px" align="center" >
+                        投递日期
+                    </td>
+                </tr>
+                {% for record in currentpage.object_list %}
+                <tr>
+                    <td align="center" >{{ forloop.counter }}</td>
+                    <td class="btn"><a href="/lookjianli?jianli_id={{ record.jianli.pk }}">{{ record.jianli.name }}</a></td>
+                    <td align="center" >{{ record.updatetime|date:"Y-m-d" }}</td>
+                </tr>
+                {% endfor %}
+                {% if not currentpage.object_list.count %}
+                    <tr>
+                    <td  align="center" colspan="3"  >
+                        没有找到数据。
+                    </td>
+                    </tr>
+                {% endif %}
+                <tr>
+                <td  align="center" colspan="3"  >
+                    <a href="#" >(当前第 {{ start }} 页,共 {{ page.num_pages }} 页)</a>&nbsp;&nbsp;&nbsp;
+                {% if currentpage.has_previous %}
+                         <a href="/toudilist?{{ querystr }}&start={{ currentpage.previous_page_number }}&limit={{ limit }}">前一页</a>
+                {% endif %}
+                {% for p in page.page_range %}
+                    {% ifequal start p %}
+                        <a href="#" style="text-decoration: underline;">{{ p }}</a>&nbsp;&nbsp;
+{#                        <a href="/toudilist?{{ querystr }}&start={{ p }}">{{ p }}</a>&nbsp;&nbsp;#}
+                    {% else %}
+                        <a href="/toudilist?{{ querystr }}&start={{ p }}">{{ p }}</a>&nbsp;&nbsp;
+                    {% endifequal %}
+                {% endfor %}
+                {% if currentpage.has_next %}
+                         <a href="/toudilist?{{ querystr }}&start={{ currentpage.next_page_number }}&limit={{ limit }}">后一页</a>
+                {% endif %}
+
+                    </td>
+                </tr>
+            </table>
+            </td>
+            </tr>
+            </table>
+            </div>
+    </div>
+<script type="text/javascript">
+    senfe("jianlilist","#f6f6f6","#fff","#d9ebf5","#aed6fc");
+</script>
+{% endblock  %}

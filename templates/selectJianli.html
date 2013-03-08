@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <link href="/media/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/media/css/commitlist.css" rel="stylesheet" type="text/css">
+    <script src="/media/js/jquery.js"></script>
+
+    <script src="/media/js/json2.js"></script>
+    <script src="/media/js/artDialog.source.js?skin=blue"></script>
+    <script src="/media/js/iframeTools.source.js"></script>
+    <script type="text/javascript">
+        function onSubmitTouDi(){
+            var jiangli_id=null;
+            var work_id={{ work }};
+            var user_id={{ uid }};
+            var radios=document.getElementsByName('jianli_id');
+            var radio=null;
+            for(var i=0;i<radios.length;i++){
+                radio=radios[i];
+                if(radio.checked){
+                    jiangli_id=radio.value;
+                    break;
+                }
+            }
+            $.ajax({type: "POST",
+                    url: "/toudijianli",
+                    data:{uid:user_id,work_id:work_id,jianli_id:jiangli_id},
+                    dataType:'json',
+                    async: true,
+                    success: function(data){
+                           if(data.success){
+                               art.dialog({title:'提示',content:data.msg,icon:'succeed',lock: true,ok:function(){
+                                   art.dialog.close();
+                               }});
+                           }else{
+                               art.dialog({title:'提示',content:data.msg,icon:'warning',lock: true,ok:true});
+                           }
+                    }
+
+                });
+
+        }
+    </script>
+</head>
+<body style="vertical-align: middle;" >
+<form id="form1" action="/savejianli" method="post" target="result">
+    <table id="jianlilist" class="table0 tdpadding" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr >
+        <td width="50px" align="center"  >
+                选择
+            </td>
+            <td align="center" >
+                职位名称
+            </td>
+            <td width="100px" align="center" >
+                最后修改日期
+            </td>
+        </tr>
+        {% for jianli in list %}
+        <tr>
+            <td align="center" ><input type="radio" style="width: 50px;" name="jianli_id" {% ifequal forloop.counter0 0 %}checked="checked" {% endifequal %} value="{{ jianli.pk }}"></td>
+            <td align="left">{{ jianli.name }}</td>
+            <td align="center" >{{ jianli.updatetime|date:"Y-m-d" }}</td>
+        </tr>
+        {% endfor %}
+        {% if not list.count %}
+        <tr >
+            <td colspan="3" align="center"  >
+                <a href="/addjianli" target="_blank" class="commit_btn" onclick="onSubmitTouDi();">创建新简历</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr >
+        <td colspan="3" align="center"  >
+            <a href="#" class="commit_btn" onclick="onSubmitTouDi();">投递</a>{% csrf_token %}
+            </td>
+        </tr>
+        {% endif %}
+
+    </table>
+    </form>
+<iframe name="result" id="result" width="0px" height="0px" frameborder="0"></iframe>
+</body>
+</html>

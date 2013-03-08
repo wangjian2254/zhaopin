@@ -35,9 +35,9 @@ var replaybutton=document.getElementById("replaybutton");
     function getReplay()
     {
         var commentlistdata;
-        $.ajax({type: "GET",
-            url: "/joke/commentList",
-            data:{jokeid:"{{ obj.pk }}"},
+        $j.ajax({type: "POST",
+            url: "/commentList",
+            data:{pk:"{{ obj.pk }}",type:"{{ objtype }}"},
             dataType:'json',
             async: true,
             success: function(data){
@@ -57,12 +57,12 @@ var replaybutton=document.getElementById("replaybutton");
                     }
                     datamap[dataobj['id']]=dataobj;
                 }
-               var commenthtml0='<div class="commentlist"><table  border="0" cellpadding="0" cellspacing="0" ><tr class="top"><td rowspan="4" width="60px" valign="bottom"><img src="/static/img/default/face/face';
+               var commenthtml0='<div class="commentlist"><table  border="0" cellpadding="0" cellspacing="0" ><tr class="top"><td rowspan="4" width="60px" valign="bottom"><img src="/media/img/default/face/face';
                var commenthtml1='.gif"  /></td><td class="commenttl"></td><td  class="commentt"></td><td class="commenttr"></td></tr><tr><td class="commentl"></td><td class="commentc">';
                var commenthtml2='</td><td class="commentr"></td></tr><tr class="bottom"><td class="commentbl"></td><td class="commentb"></td><td class="commentbr"></td></tr><tr><td colspan="2" height="25"></td></tr></table>';
                var commenthtml3='</div>';
 
-               var replayhtml0='<div class="replaylist"><table  border="0" cellpadding="0" cellspacing="0" align="right"><tr class="top"><td class="commentrtl"></td><td  class="commentrt"></td><td class="commentrtr"></td><td rowspan="4" width="60px" valign="bottom"><img src="/static/img/default/face/face';
+               var replayhtml0='<div class="replaylist"><table  border="0" cellpadding="0" cellspacing="0" align="right"><tr class="top"><td class="commentrtl"></td><td  class="commentrt"></td><td class="commentrtr"></td><td rowspan="4" width="60px" valign="bottom"><img src="/media/img/default/face/face';
                var replayhtml1= '.gif"  /></tr><tr><td class="commentrl"></td><td class="commentrc">';
                var replayhtml2='</td><td class="commentrr"></td></tr><tr class="bottom"><td class="commentrbl"></td><td class="commentrb"></td><td class="commentrbr"></td></tr></table></div>';
                 for(var j=0;j<dataarr.length;j++){
@@ -77,12 +77,12 @@ var replaybutton=document.getElementById("replaybutton");
                         }
                     }
                     replayhtml+=commenthtml3;
-                    $('#commentlistdiv').append(replayhtml);
+                    $j('#commentlistdiv').append(replayhtml);
                }
             }
         });
     };
 </script>
-<div id="commentlistdiv">
+<div id="commentlistdiv" >
 
 </div>

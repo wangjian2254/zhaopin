@@ -4,7 +4,13 @@
 {% endblock  %}
 {% block content %}
     <div class="con_head">
-        <form action="/Reg2/" method="post">
+    <script type="text/javascript">
+        function onSubmitForm(){
+            var f=document.getElementById('regform');
+            f.submit();
+        }
+    </script>
+        <form action="/Reg2/" method="post" id="regform">
         <div class="con_h_left" >
             <div style="width: 100%;text-align: left;">
                 <span class="loginh1">注册</span>
@@ -39,7 +45,11 @@
                         </tr>
 
                         <tr>
-                            <td class="loginCenter" colspan="3"><input type="submit" value="注册"  class="defaultButton" > <input type="reset" value="清空" class="defaultButton" >{% csrf_token %}</td>
+                            <td class="loginCenter" colspan="3">
+{#                                <a href="#" class="commit_btn" onclick="onSubmitForm();">注册</a>#}
+                                <input type="submit" value="注册"  class="defaultButton" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="reset" value="清空" class="defaultButton" >
+                                {% csrf_token %}</td>
                         </tr>
                     </table>
 
