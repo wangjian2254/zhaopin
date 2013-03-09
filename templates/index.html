@@ -1,6 +1,35 @@
 {% extends "basepage/basepage.html" %}
 {% block content %}
-    <div class="con_head">
+    <script type="text/javascript">
+    $j(function(){
+        var a="#f6f6f6";
+        var b="#fff";
+        var c="#d9ebf5";
+        var d="#aed6fc";
+        renderP("gonggao",a,b,c,d);
+        renderP("exp_work",a,b,c,d);
+        renderP("exp_people",a,b,c,d);
+
+    });
+    function renderP(o,t,a,b,c,d){
+        var t = document.getElementById(o).getElementsByTagName("tr");
+        for (var i = 0; i < t.length; i++) {
+                		t[i].style.backgroundColor = (t[i].sectionRowIndex % 2 == 0) ? a : b;
+
+                		t[i].onmouseover = function() {
+                			if (this.x != "1")
+                				this.style.backgroundColor = c;
+                		}
+                		t[i].onmouseout = function() {
+                			if (this.x != "1")
+                				this.style.backgroundColor = (this.sectionRowIndex % 2 == 0)
+                						? a
+                						: b;
+                		}
+                	}
+    }
+    </script>
+    <div class="con_head" xmlns="http://www.w3.org/1999/html">
         <div class="con_h_left">
             <div style="width: 100%;font-size: 25px;text-align: left;padding-left: 50px;">
                 寻找工作
@@ -25,11 +54,43 @@
                     </table>
                 </form>
             </div>
+            <div style="width: 100%;" >
+                <div style="width: 50%;display: block;float: left;" >
+                <p style="width: 100%;text-align: left;">
+                <b><span style="margin-left: 20px;text-align: left;font-size: 20px;">{{ gonggao.name }}</span></b>
+                </p>
+                <table id="gonggao" width="100%" cellpadding="0" cellspacing="0" border="0">
+                    {% for news in gonggao.list %}
+                        <tr style="height: 25px;">
+                            <td width="20px" align="center">{{ forloop.counter }}.</td>
+                            <td align="left"><a href="/newslook?news_id={{ news.id }}">{{ news.title }}</a></td>
+                            <td width="100px"  align="center">{{ news.updatetime|date:'Y-m-d' }}</td>
+                        </tr>
+                {% endfor %}
+                </table>
+            </div>
+                <div style="width: 50%;display: block;float: left;" >
+                <p style="width: 100%;text-align: left;">
+                <b><span style="margin-left: 20px;text-align: left;font-size: 20px;">{{ mianshi.name }}</span></b>
+                </p>
+                <table id="mianshi" width="100%" cellpadding="0" cellspacing="0" border="0">
+                    {% for news in mianshi.list %}
+                        <tr style="height: 25px;">
+                            <td width="20px" align="center">{{ forloop.counter }}.</td>
+                            <td align="left"><a href="/newslook?news_id={{ news.id }}">{{ news.title }}</a></td>
+                            <td width="100px"  align="center">{{ news.updatetime|date:'Y-m-d' }}</td>
+                        </tr>
+                {% endfor %}
+                </table>
+            </div>
+
+
+            </div>
         </div>
         <div class="con_h_right">
             <h2>最近发布的职位</h2>
             {% for work in newzhiweilist %}
-                <span style="float: left;text-align: left;margin-bottom: 10px;margin-top: 5px;">
+                <span style="float: left;text-align: left;margin-bottom: 10px;margin-top: 5px;" class="btn">
                     <a href="/lookwork?work_id={{ work.id }}" target="_blank"><span>{{ forloop.counter }}.</span>
                     <span>{{ work.zhiwei }}</span>
                     <span  style="font: 9px;">[{{ work.user.business.name }}]</span></a>
@@ -39,7 +100,34 @@
     </div>
     <div class="con_center" >
         <div class="con_c_left">
-            <h1></h1>
+            <div style="width: 50%;display: block;float: left;" >
+                <p style="width: 100%;text-align: left;">
+                <b><span style="margin-left: 20px;text-align: left;font-size: 20px;">{{ exp_work.name }}</span></b>
+                </p>
+                <table id="exp_work" width="100%" cellpadding="0" cellspacing="0" border="0">
+                    {% for news in exp_work.list %}
+                        <tr style="height: 25px;">
+                            <td width="20px" align="center">{{ forloop.counter }}.</td>
+                            <td align="left"><a href="/newslook?news_id={{ news.id }}">{{ news.title }}</a></td>
+                            <td width="100px"  align="center">{{ news.updatetime|date:'Y-m-d' }}</td>
+                        </tr>
+                {% endfor %}
+                </table>
+            </div>
+            <div style="width: 100%;width: 50%;display: block;float: right;" >
+                <p style="width: 100%;text-align: left;">
+                <b><span style="margin-left: 20px;text-align: left;font-size: 20px;">{{ exp_people.name }}</span></b>
+                </p>
+                <table id="exp_people" width="100%" cellpadding="0" cellspacing="0" border="0">
+                    {% for news in exp_people.list %}
+                        <tr style="height: 25px;">
+                            <td width="20px" align="center">{{ forloop.counter }}.</td>
+                            <td align="left"><a href="/newslook?news_id={{ news.id }}">{{ news.title }}</a></td>
+                            <td width="100px"  align="center">{{ news.updatetime|date:'Y-m-d' }}</td>
+                        </tr>
+                {% endfor %}
+                </table>
+            </div>
         </div>
         <div class="con_c_right">
             <h2>最近更新的简历</h2>

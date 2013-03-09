@@ -9,26 +9,21 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.views.decorators.csrf import csrf_exempt
+from zhaopin.pin.models import Column, News
+from zhaopin.pin.tools import getSessionMsg, RESULT, SUCCESS, MSG, WARN
 from zhaopin.pin.models import Replay
 from zhaopin.pin.models import LookRecord, ZhiWei, WorkLookRecord, Business
 from zhaopin.pin.models import JianLi, JiaoYu, WorkJingYan
-RESULT='result'
-MSG='msg'
-SUCCESS='success'
-WARN='warn'
-def getSessionMsg(request,requestdic):
-    requestdic[RESULT]=request.session.get(RESULT, '')
-    requestdic[MSG]=request.session.get(MSG, '')
-    if request.session.has_key(RESULT):
-        del request.session[RESULT]
-    if request.session.has_key(MSG):
-        del request.session[MSG]
-    return requestdic
+
 
 def index(request):
     newzhiweilist=ZhiWei.objects.filter(ispub=True).order_by('-updatetime')[:10]
     newjianlilist=JianLi.objects.filter(ispub=True).order_by('-updatetime')[:10]
-    return render_to_response('index.html',{'newzhiweilist':newzhiweilist,'newjianlilist':newjianlilist},RequestContext(request,{}))
+    responsedic={'newzhiweilist':newzhiweilist,'newjianlilist':newjianlilist}
+    for column in Column.objects.all():
+        responsedic[column.code]=column
+        column.list=News.objects.filter(column=column).filter(ispub=True).order_by('-updatetime')[:10]
+    return render_to_response('index.html',getSessionMsg(request,responsedic),RequestContext(request,{}))
 
 
 @login_required
@@ -132,7 +127,7 @@ def toudilist(request):
     query={'work_id':work_id}
     querystr=urllib.urlencode(query)
 
-    return render_to_response('toudijianlilist.html',{'querystr':querystr,'work':work,'page':page,'currentpage':currentpage},RequestContext(request,{}))
+    return render_to_response('toudijianlilist.html',getSessionMsg(request,{'querystr':querystr,'work':work,'page':page,'currentpage':currentpage}),RequestContext(request,{}))
 
 @login_required
 def jianlilist(request):
@@ -464,7 +459,7 @@ def jianliRecodelook(request):
 
 def companylook(request):
     '''
-    保存公司信息
+    查看公司信息
     '''
     id=request.GET.get('company_id','')
     business=Business.objects.get(pk=id)
@@ -483,8 +478,8 @@ def commentAdd(request):
         fromurl=request.META.get('HTTP_REFERER','/')
     type=request.POST.get('type','')
     content=request.POST.get('content','')
-    content=content.replace('<','&lt;')
-    content=content.replace('>','&gt;')
+#    content=content.replace('<','&lt;')
+#    content=content.replace('>','&gt;')
     face=request.POST.get('face','')
     pk=request.POST.get('pk','')
     if pk and content and type:
@@ -522,3 +517,40 @@ def commentList(request):
         replaylist.append(rmap)
     html=json.dumps(replaylist)
     return  HttpResponse(html)
+
+
+def newslist(request):
+    '''
+    栏目下新闻列表
+    '''
+    start=request.REQUEST.get('start',1)
+    start=int(start)
+    id=request.GET.get('column_id','')
+    column=Column.objects.get(pk=id)
+    list=News.objects.filter(column=column).filter(ispub=True)
+    page=Paginator(list,20)
+    currentpage=page.page(start)
+    query={'column_id':id}
+    querystr=urllib.urlencode(query)
+
+    return render_to_response('newslist.html',getSessionMsg(request,{'querystr':querystr,'column':column,'start':start,'page':page,'currentpage':currentpage}),RequestContext(request,{}))
+
+def newslook(request):
+    '''
+    新闻内容查看
+    '''
+    id=request.GET.get('news_id','')
+
+    if 0==News.objects.filter(pk=id).count() or not News.objects.get(pk=id).ispub:
+        request.session[RESULT]=WARN
+        request.session[MSG]=u'新闻不存在。'
+        if hasattr(request,'environ'):
+            fromurl=request.environ.get('HTTP_REFERER','/')
+        if hasattr(request,'META'):
+            fromurl=request.META.get('HTTP_REFERER','/')
+        return  HttpResponseRedirect(fromurl)
+
+    news=News.objects.get(pk=id)
+    column=news.column
+
+    return render_to_response('newslook.html',getSessionMsg(request,{'column':column,'obj':news,'objtype':'news'}),RequestContext(request,{}))

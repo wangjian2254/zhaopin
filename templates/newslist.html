@@ -1,0 +1,80 @@
+{% extends "basepage/basepage.html" %}
+{% block title %}
+        <title>{{ column.name }}</title>
+{% endblock  %}
+{% block content %}
+
+    <div class="con_center" >
+
+            <div style="width: 100%;">
+            <table class="tablemargin" width="100%" height="100%" border="0" cellspacing="0"
+                			cellpadding="0">
+            <tr>
+                <td height="32" class="table1">
+                    <div class="content_title">
+                        <span> <b>{{ column.name }}</b></span>
+                        <div class="title_form600" >
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td valign="top">
+            <table id="worklist" class="table0 tdpadding" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr >
+                <td width="50px" align="center"  >
+                        序号
+                    </td>
+                    <td align="center" >
+                        新闻标题
+                    </td>
+                    <td width="100px" align="center" >
+                        发布时间
+                    </td>
+
+                </tr>
+                {% for recode in currentpage.object_list %}
+                <tr>
+                    <td align="center" >{{ forloop.counter }}</td>
+                    <td class="btn"><a href="/newslook?news_id={{ recode.id }}">{{ recode.title }}</a></td>
+                    <td align="center" >{{ recode.updatetime|date:"Y-m-d" }}</td>
+                </tr>
+                {% endfor %}
+                {% if not currentpage.object_list.count %}
+                    <tr>
+                    <td  align="center" colspan="3"  >
+                        没有找到数据。
+                    </td>
+                    </tr>
+                {% endif %}
+                <tr>
+                <td  align="center" colspan="3"  >
+                    <a href="#" >(当前第 {{ start }} 页,共 {{ page.num_pages }} 页)</a>&nbsp;&nbsp;&nbsp;
+                {% if currentpage.has_previous %}
+                         <a href="/newslist?{{ querystr }}&start={{ currentpage.previous_page_number }}&limit={{ limit }}">前一页</a>
+                {% endif %}
+                {% for p in page.page_range %}
+                    {% ifequal start p %}
+{#                        <a href="#" style="text-decoration: underline;">{{ p }}</a>&nbsp;&nbsp;#}
+                        <a href="/newslist?{{ querystr }}&start={{ p }}">{{ p }}</a>&nbsp;&nbsp;
+                    {% else %}
+                        <a href="/newslist?{{ querystr }}&start={{ p }}">{{ p }}</a>&nbsp;&nbsp;
+                    {% endifequal %}
+                {% endfor %}
+                {% if currentpage.has_next %}
+                         <a href="/newslist?{{ querystr }}&start={{ currentpage.next_page_number }}&limit={{ limit }}">后一页</a>
+                {% endif %}
+
+                    </td>
+                </tr>
+            </table>
+            </td>
+            </tr>
+            </table>
+            </div>
+    </div>
+<script type="text/javascript">
+    senfe("worklist","#f6f6f6","#fff","#d9ebf5","#aed6fc");
+</script>
+{% endblock  %}

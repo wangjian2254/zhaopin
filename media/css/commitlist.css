@@ -123,7 +123,7 @@ width:17px;
 }
 .commentc{
 background-color:#ebd134;
-max-width:400px;
+mix-width:200px;
 }
 .commentr{
 background:url("/media/img/i/yellowright.png") repeat-y;
@@ -144,7 +144,11 @@ width:100%;
 float: left;
 
 }
-
+.commentlist a{
+    text-decoration: underline;
+    margin-left: 3px;
+    margin-right: 3px;
+}
 .commentrtl{
 background:url("/media/img/w/white.png") no-repeat -0px -0px;
 height:15px;

@@ -1,0 +1,36 @@
+{% extends "basepage/basepage.html" %}
+{% block title %}
+        <title>{{ obj.title }}_{{ column.name }}</title>
+{% endblock  %}
+{% block content %}
+
+    <div class="con_center" >
+
+            <div style="width: 100%;font-size: 25px;text-align: center;">
+            {{ obj.title }}
+            </div>
+            <div style="width: 100%;font-size: 15px;text-align: center;">
+            {{ obj.updatetime|date:"Y-m-d" }}
+            </div>
+            <div style="width: 100%;">
+            {{ obj.content|safe}}
+            </div>
+    </div>
+    <div class="con_center" >
+        {% include 'comment/comment.html' %}
+    </div>
+<div class="con_center" >
+        {% include 'comment/commentlist.html' %}
+    </div>
+<!-- 将此代码放在适当的位置，建议在body结束前 -->
+                   <script id="bdlike_shell"></script>
+                   <script>
+                   var bdShare_config = {
+                    "type":"small",
+                    "color":"blue",
+                    "uid":"1883581",
+                    "share":"yes"
+                   };
+                   document.getElementById("bdlike_shell").src="http://bdimg.share.baidu.com/static/js/like_shell.js?t=" + Math.ceil(new Date()/3600000);
+                   </script>
+{% endblock  %}

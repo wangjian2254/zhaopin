@@ -11,18 +11,11 @@
     {% block desc %}
     {% endblock  %}
     {% block basecss %}
-        {% if session_user %}
-        {% else %}
-{#            <link href="/media/jquery/jquery-ui-1.8.20.custom.css" rel="stylesheet" type="text/css"/>#}
-{#            <link href="/media/jquery/css/register.css" rel="stylesheet" type="text/css"/>#}
-        {% endif %}
         <link href="/media/css/default.css" rel="stylesheet" type="text/css">
         <link href="/media/css/style.css" rel="stylesheet" type="text/css">
         <link href="/media/css/commitlist.css" rel="stylesheet" type="text/css">
     {% endblock  %}
     {% block basejs %}
-        {% if session_user %}
-        {% else %}
 {#            <script src="/media/jquery/jquery-1.7.2.min.js"></script>#}
 {#            <script src="/media/jquery/jquery-ui-1.8.20.custom.min.js"></script>#}
             <script src="/media/js/jquery.js"></script>
@@ -35,7 +28,11 @@
             <script src="/media/js/artDialog.source.js?skin=blue"></script>
             <script src="/media/js/iframeTools.source.js"></script>
             <script src="/media/date/WdatePicker.js"></script>
-        {% endif %}
+            <script type="text/javascript">
+                $j(function(){
+                    result_alert2('{{ result }}','{{ msg }}');
+                });
+            </script>
     {% endblock  %}
 </head>
 <body class="div_c">

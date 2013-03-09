@@ -1,4 +1,5 @@
 {% extends "basepage/basepage.html" %}
+{% load ueditor_filter %}
 {% block title %}
     <title>发布职位</title>
 {% endblock  %}
@@ -8,11 +9,9 @@
         if(!valSubmit()){
             return;
             }
+        editor.sync();
         $j("#form1")[0].submit();
     }
-$j(function(){
-    result_alert2('{{ result }}','{{ msg }}');
-});
 </script>
     <div class="con_center" >
     <form id="form1" action="/savework" method="post">
@@ -80,7 +79,7 @@ $j(function(){
                     工作描述：
                 </td>
                 <td align="left" colspan="3">
-                    <textarea rows="25"  name="desc"  style="width: 75%;">{{ work.desc|default_if_none:"" }}</textarea>
+                    {{ work.desc|ueditorReplay:"desc"|safe  }}
                 </td>
 
             </tr>

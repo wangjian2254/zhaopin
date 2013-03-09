@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.contrib.auth.views import login, logout
 from zhaopin.pin.loginviews import reg, reg2
 from zhaopin import settings
-from zhaopin.pin.views import commentAdd,commentList,replay
+from zhaopin.pin.views import commentAdd,commentList,replay,newslist,newslook
 from zhaopin.pin.views import index,toudijianli,toudilist,selectJianli,jianliRecodelook,jianlilist,addjianli,deljianli,savejianli,pubjianli,lookjianli,worklist,addwork,savework,pubwork,lookwork,updatecompany,savecompany,companylook
 from zhaopin.pin.searchView import searchWork,searchPeople
 admin.autodiscover()
@@ -13,6 +13,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     (r'^$', index),
+    (r'^newslook', newslook),
+    (r'^newslist', newslist),
     (r'^SearchWork', searchWork),
     (r'^SearchPeople', searchPeople),
     (r'^replay', replay),
@@ -47,6 +49,7 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^static/(?P<path>.*)$', 'django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
     (r'^media/(?P<path>.*)$', 'django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
+    url(r'^ueditor/', include('zhaopin.ueditor.urls')),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),

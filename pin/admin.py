@@ -5,6 +5,8 @@ __author__ = 'WangJian'
 
 from django.contrib import admin
 
+class ColumnAdmin(admin.ModelAdmin):
+    list_display = ('name','code')
 class NewsAdmin(admin.ModelAdmin):
     ordering = ('-updatetime',)
     search_fields=('title',)
@@ -12,5 +14,5 @@ class NewsAdmin(admin.ModelAdmin):
     list_filter = ('column',)
 
 
-admin.site.register(Column)
+admin.site.register(Column,ColumnAdmin)
 admin.site.register(News,NewsAdmin)

@@ -7,9 +7,7 @@
     function fenxiang(){
         art.dialog.open("/fenxiangweibo",{id:'showFenXiang',title: '发布微博',lock: true, width: 600, height:350});
     }
-$j(function(){
-    result_alert2('{{ result }}','{{ msg }}');
-});
+
 </script>
     <div class="con_center" >
     <form id="form1" action="/savejianli" method="post">
@@ -65,7 +63,7 @@ $j(function(){
            </tr>
             <tr >
                <td align="left" colspan="4">
-                   {{ business.desc }}
+                   {{ business.desc|safe }}
                </td>
            </tr>
             <tr >

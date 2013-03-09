@@ -1,3 +1,4 @@
+{% load ueditor_filter %}
 <form action="/commentAdd" method="post" id="jokeform">
     <a name="replay"></a>
 
@@ -46,7 +47,8 @@
             内容：
         </td>
         <td>
-            <textarea rows="8" style="width: 75%" name="content"></textarea>
+            {{ content|ueditorReplay:"content"|safe }}
+{#            <textarea rows="8" style="width: 75%" name="content"></textarea>#}
         </td>
     </tr>
     <tr height="45px">
@@ -96,6 +98,7 @@
 {#            });#}
 {#    }#}
     function onSubmitJoke(){
+        editor.sync();
         $('#jokeform')[0].submit();
     }
 </script>

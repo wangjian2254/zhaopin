@@ -1,4 +1,5 @@
 #coding=utf-8
+import datetime
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
@@ -101,7 +102,7 @@ class Replay(models.Model):
 
 class Column(models.Model):
     name=models.CharField(max_length=10,verbose_name=u'栏目名称')
-    code=models.CharField(max_length=10,verbose_name=u'栏目代码',help_text=u'templates 中使用')
+    code=models.CharField(max_length=10,verbose_name=u'栏目代码',help_text=u'templates 中使用,请写成英文')
     class Admin():
         pass
     class Meta():
@@ -112,9 +113,9 @@ class Column(models.Model):
         return self.name
 class News(models.Model):
     title=models.CharField(max_length=50,verbose_name=u'标题')
-    column=models.ForeignKey(Column)
+    column=models.ForeignKey(Column,verbose_name=u'栏目')
     content=models.TextField(verbose_name=u'内容',blank=True,null=True)
-    updatetime=models.DateTimeField(auto_created=True,verbose_name=u'最后修改日期')
+    updatetime=models.DateTimeField(default=datetime.datetime.now(),auto_created=True,verbose_name=u'最后修改日期')
     ispub=models.BooleanField(default=True,verbose_name=u'是否公开')
     class Admin():
         pass

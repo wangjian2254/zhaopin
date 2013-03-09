@@ -10,9 +10,6 @@
     function toudi(uid,work_id){
         art.dialog.open("/selectJianli?work_id="+work_id+"&uid="+uid,{id:'selectJianli',title: '投递简历',lock: true, width: 600, height:450});
     }
-$j(function(){
-    result_alert2('{{ result }}','{{ msg }}');
-});
 </script>
     <div class="con_center" >
     <form id="form1" action="/savejianli" method="post">
@@ -114,7 +111,7 @@ $j(function(){
             </tr>
                         <tr>
                 <td align="left" colspan="4">
-                    {{ obj.desc|default_if_none:"" }}
+                    {{ obj.desc|default_if_none:""|safe }}
                 </td>
 
             </tr>
@@ -161,7 +158,7 @@ $j(function(){
            </tr>
             <tr >
                <td align="left" colspan="4">
-                   {{ business.desc }}
+                   {{ business.desc|safe}}
                </td>
            </tr>
             <tr >
