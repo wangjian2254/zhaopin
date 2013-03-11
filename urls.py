@@ -8,6 +8,7 @@ from zhaopin import settings
 from zhaopin.pin.views import commentAdd,commentList,replay,newslist,newslook
 from zhaopin.pin.views import index,toudijianli,toudilist,selectJianli,jianliRecodelook,jianlilist,addjianli,deljianli,savejianli,pubjianli,lookjianli,worklist,addwork,savework,pubwork,lookwork,updatecompany,savecompany,companylook
 from zhaopin.pin.searchView import searchWork,searchPeople
+from zhaopin.pin.weiboManage import Login_check,weiboLogin,pubWeibo,setWeibo
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -39,6 +40,14 @@ urlpatterns = patterns('',
     (r'^selectJianli', selectJianli),
     (r'^toudijianli', toudijianli),
     (r'^savejianli', savejianli),
+
+    (r'^weibo/login_check', Login_check),
+    (r'^weibo/login', weiboLogin),
+    (r'^pubWeibo', pubWeibo),
+    (r'^setWeibo', setWeibo),
+
+
+
     # url(r'^zhaopin/', include('zhaopin.foo.urls')),
     (r'^Reg/$',reg),
     (r'^Reg2/$',reg2),

@@ -37,12 +37,12 @@ function result_alert2(type,content)
 {
     switch (type)
     {
-        case "success":
+        case "succeed":
 	        {
 	        	art.dialog({title:'提示',content:content,icon:'succeed',lock: true,ok:true});
 	        }
 	        break;
-        case "warn":
+        case "warning":
             {
            	 art.dialog({title:'提示',content:content,icon:'warning',lock: true,ok:true});
         	}

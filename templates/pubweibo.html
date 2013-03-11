@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+    <link href="/media/css/commitlist.css" rel="stylesheet" type="text/css">
+    <script src="/media/js/jquery.js"></script>
+                <script type="text/javascript">
+                    var $j = jQuery.noConflict();
+                </script>
+    <script type="text/javascript">
+        $j(function (){
+            var sina=null;
+            var wy=null;
+            var teng=null;
+            {% for btn in user.weibo_set.all %}
+{#                {% ifequal btn.type 'sina' %}#}
+{#                    sina={name:'新浪微博(已授权)',disabled:true,callback:function(){}};#}
+{#                {% endifequal %}#}
+{#                {% ifequal btn.type 'wy' %}#}
+{#                    wy={name:'网易微博(已授权)',disabled:true,callback:function(){}};#}
+{#                {% endifequal %}#}
+{#                {% ifequal btn.type 'teng' %}#}
+{#                    teng={name:'腾讯微博(已授权)',disabled:true,callback:function(){}};#}
+{#                {% endifequal %}#}
+                {% ifequal btn.type 'sina' %}
+                    sina=true;
+                {% endifequal %}
+                {% ifequal btn.type 'wy' %}
+                    wy=true;
+                {% endifequal %}
+                {% ifequal btn.type 'teng' %}
+                    teng=true;
+                {% endifequal %}
+            {% endfor %}
+            if(sina){
+                document.getElementById('weiboasina').style.display='none';
+            }
+            if(wy){
+                document.getElementById('weiboawy').style.display='none';
+            }if(teng){
+                document.getElementById('weiboateng').style.display='none';
+            }
+        });
+
+
+//
+    function goWeibo(type){
+        parent.window.location.href='/weibo/login?website='+type+'&fromurl={{ fromurl }}';
+    }
+    function submitWeibo(){
+        $j("#pubWeibo").submit();
+    }
+    </script>
+</head>
+<body style="padding: 10px;margin: 0px;">
+
+<div id="weiboselect" style="display: block;width:600px;">
+    <form id="pubWeibo" action="/pubWeibo" method="post">
+    <div  style="font-size: 15px;margin-top: 0px;margin-bottom: 5px;width: 600px;">
+        分享微博:
+    </div>
+    <div style="font-size: 15px;margin-top: 10px;margin-bottom: 5px;width: 600px;">
+        <textarea rows="6"  style="width: 550px;" id="weibo_content" name="content">{{ content }}</textarea>
+    </div>
+    <div style="font-size: 15px;margin-top: 10px;margin-bottom: 5px;">
+
+    {% if not user.weibo_set.all.count %}
+        <span style="font-size: 15px;color: red;">您还没有授权任何微博。请先授权微博，然后再继续操作。</span>
+    {% else %}
+        <span style="font-size: 15px;">发送到：</span>
+        {% for btn in user.weibo_set.all %}
+            {% ifequal btn.type 'sina' %}
+                <input type="checkbox" name="website" value="sina" checked="checked" style="width: 30px;">新浪微博
+            {% endifequal %}
+        {% endfor %}
+        {% for btn in user.weibo_set.all %}
+            {% ifequal btn.type 'wy' %}
+                <input type="checkbox" name="website" value="wy" checked="checked" style="width: 30px;">网易微博
+            {% endifequal %}
+        {% endfor %}
+        {% for btn in user.weibo_set.all %}
+            {% ifequal btn.type 'teng' %}
+                <input type="checkbox" name="website" value="teng" checked="checked" style="width: 30px;">腾讯微博
+            {% endifequal %}
+        {% endfor %}
+        <input type="hidden" name="fromurl" value="{{ fromurl }}">
+        {% csrf_token %}
+    {% endif %}
+    </div>
+        <div  style="font-size: 15px;margin-top: 0px;margin-bottom: 5px;width: 600px;display: block;">
+            <span style="font-size: 15px;float: left;">绑定账号：</span>
+        <a id="weiboasina" href="javascript:goWeibo('sina')" class="commit_btn1"  >新浪微博</a>
+        <a id="weiboawy" href="javascript:goWeibo('wy')" class="commit_btn1" >网易微博</a>
+        <a id="weiboateng" href="javascript:goWeibo('teng')" class="commit_btn1" >腾讯微博</a>
+
+
+    </div>
+        <div  style="font-size: 15px;margin-top: 0px;margin-bottom: 5px;width: 600px;display: block;">
+            <a href="javascript:submitWeibo()" class="commit_right_btn" >发布微博</a>
+    </div>
+    </form>
+</div>
+</body>
+</html>

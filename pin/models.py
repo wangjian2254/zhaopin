@@ -18,11 +18,11 @@ class Business(models.Model):
     url=models.URLField(verbose_name=u'公司网站',blank=True,null=True,help_text=u'人数规模')
 
 class WeiBo(models.Model):
-    user=models.OneToOneField(User,verbose_name=u'用户身份')
+    user=models.ForeignKey(User,verbose_name=u'用户身份')
     type=models.CharField(max_length=10,blank=True,null=True,verbose_name=u'微博类型',help_text=u'新浪、腾讯等等')
     token0=models.CharField(max_length=200,blank=True,null=True,verbose_name=u'微博授权1')
     token1=models.CharField(max_length=200,blank=True,null=True,verbose_name=u'微博授权2')
-    token3=models.CharField(max_length=200,blank=True,null=True,verbose_name=u'微博授权3')
+    token2=models.CharField(max_length=200,blank=True,null=True,verbose_name=u'微博授权3')
 
 class JianLi(models.Model):#简历
     user=models.ForeignKey(User,verbose_name=u'简历人')

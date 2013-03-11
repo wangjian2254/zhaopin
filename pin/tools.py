@@ -5,8 +5,8 @@
 __author__ = u'王健'
 RESULT='result'
 MSG='msg'
-SUCCESS='success'
-WARN='warn'
+SUCCESS='succeed'
+WARN='warning'
 def getSessionMsg(request,requestdic):
     requestdic[RESULT]=request.session.get(RESULT, '')
     requestdic[MSG]=request.session.get(MSG, '')

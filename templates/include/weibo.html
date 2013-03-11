@@ -1,0 +1,39 @@
+<script type="text/javascript">
+    var weiboframe=null;
+    function fenxiang1(){
+//       var url=;
+    weiboframe=art.dialog.open('/setWeibo?content='+toUTF8('{% ifequal obj.user.person.type 1 %}发布新简历：{{ obj.name }}{% endifequal %}{% ifequal obj.user.person.type 2 %}招聘 {{ obj.zhiwei }} _{{ obj.user.business.name }}发布职位{% endifequal %}'),{
+            id:'weibodialog',
+            title:"分享到微博",
+            width:620,
+            height:250,
+            lock:true
+        });
+    }
+    function toUTF8(szInput){
+        var wch,x,uch="",szRet="";
+        for (x=0; x<szInput.length; x++){
+        wch=szInput.charCodeAt(x);
+        if (!(wch & 0xFF80)){
+           szRet += szInput.charAt(x);
+        }
+        else if (!(wch & 0xF000)){
+           uch = "%" + (wch>>6 | 0xC0).toString(16) +
+              "%" + (wch & 0x3F | 0x80).toString(16);
+           szRet += uch;
+        }
+        else{
+           uch = "%" + (wch >> 12 | 0xE0).toString(16) +
+              "%" + (((wch >> 6) & 0x3F) | 0x80).toString(16) +
+              "%" + (wch & 0x3F | 0x80).toString(16);
+           szRet += uch;
+        }
+        }
+        return(szRet);
+    }
+    function closeWeibo(){
+        weiboframe.close();
+    }
+
+</script>
+<a href="#" class="commit_right_btn"  onclick="fenxiang1()">分享到微博</a>
