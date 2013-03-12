@@ -60,13 +60,17 @@
                 <b><span style="margin-left: 20px;text-align: left;font-size: 20px;">{{ gonggao.name }}</span></b>
                 </p>
                 <table id="gonggao" width="100%" cellpadding="0" cellspacing="0" border="0">
-                    {% for news in gonggao.list %}
-                        <tr style="height: 25px;">
-                            <td width="20px" align="center">{{ forloop.counter }}.</td>
-                            <td align="left"><a href="/newslook?news_id={{ news.id }}">{{ news.title }}</a></td>
-                            <td width="100px"  align="center">{{ news.updatetime|date:'Y-m-d' }}</td>
-                        </tr>
+                {% for news in gonggao.list %}
+                    <tr style="height: 25px;">
+                        <td width="20px" align="center">{{ forloop.counter }}.</td>
+                        <td align="left"><a href="/newslook?news_id={{ news.id }}">{{ news.title }}</a></td>
+                        <td width="100px"  align="center">{{ news.updatetime|date:'Y-m-d' }}</td>
+                    </tr>
                 {% endfor %}
+                    <tr style="height: 25px;">
+                        <td width="20px" align="right" colspan="3"><a href="/newslist?column_id={{ gonggao.id }}">更多……</a></td>
+                        </td>
+                    </tr>
                 </table>
             </div>
                 <div style="width: 50%;display: block;float: left;" >
@@ -74,13 +78,17 @@
                 <b><span style="margin-left: 20px;text-align: left;font-size: 20px;">{{ mianshi.name }}</span></b>
                 </p>
                 <table id="mianshi" width="100%" cellpadding="0" cellspacing="0" border="0">
-                    {% for news in mianshi.list %}
-                        <tr style="height: 25px;">
-                            <td width="20px" align="center">{{ forloop.counter }}.</td>
-                            <td align="left"><a href="/newslook?news_id={{ news.id }}">{{ news.title }}</a></td>
-                            <td width="100px"  align="center">{{ news.updatetime|date:'Y-m-d' }}</td>
-                        </tr>
+                {% for news in mianshi.list %}
+                    <tr style="height: 25px;">
+                        <td width="20px" align="center">{{ forloop.counter }}.</td>
+                        <td align="left"><a href="/newslook?news_id={{ news.id }}">{{ news.title }}</a></td>
+                        <td width="100px"  align="center">{{ news.updatetime|date:'Y-m-d' }}</td>
+                    </tr>
                 {% endfor %}
+                    <tr style="height: 25px;">
+                        <td width="20px" align="right" colspan="3"><a href="/newslist?column_id={{ mianshi.id }}">更多……</a></td>
+                        </td>
+                    </tr>
                 </table>
             </div>
 
@@ -96,6 +104,9 @@
                     <span  style="font: 9px;">[{{ work.user.business.name }}]</span></a>
                 </span>
             {% endfor %}
+            <span style="float: left;text-align: right;margin-bottom: 10px;margin-top: 5px;width: 100%;" class="btn">
+                <a href="/SearchWork" target="_blank"><span>更多……</span></a>
+            </span>
         </div>
     </div>
     <div class="con_center" >
@@ -105,13 +116,17 @@
                 <b><span style="margin-left: 20px;text-align: left;font-size: 20px;">{{ exp_work.name }}</span></b>
                 </p>
                 <table id="exp_work" width="100%" cellpadding="0" cellspacing="0" border="0">
-                    {% for news in exp_work.list %}
-                        <tr style="height: 25px;">
-                            <td width="20px" align="center">{{ forloop.counter }}.</td>
-                            <td align="left"><a href="/newslook?news_id={{ news.id }}">{{ news.title }}</a></td>
-                            <td width="100px"  align="center">{{ news.updatetime|date:'Y-m-d' }}</td>
-                        </tr>
+                {% for news in exp_work.list %}
+                    <tr style="height: 25px;">
+                        <td width="20px" align="center">{{ forloop.counter }}.</td>
+                        <td align="left"><a href="/newslook?news_id={{ news.id }}">{{ news.title }}</a></td>
+                        <td width="100px"  align="center">{{ news.updatetime|date:'Y-m-d' }}</td>
+                    </tr>
                 {% endfor %}
+                    <tr style="height: 25px;">
+                        <td width="20px" align="right" colspan="3"><a href="/newslist?column_id={{ exp_work.id }}">更多……</a></td>
+                        </td>
+                    </tr>
                 </table>
             </div>
             <div style="width: 100%;width: 50%;display: block;float: right;" >
@@ -119,13 +134,17 @@
                 <b><span style="margin-left: 20px;text-align: left;font-size: 20px;">{{ exp_people.name }}</span></b>
                 </p>
                 <table id="exp_people" width="100%" cellpadding="0" cellspacing="0" border="0">
-                    {% for news in exp_people.list %}
-                        <tr style="height: 25px;">
-                            <td width="20px" align="center">{{ forloop.counter }}.</td>
-                            <td align="left"><a href="/newslook?news_id={{ news.id }}">{{ news.title }}</a></td>
-                            <td width="100px"  align="center">{{ news.updatetime|date:'Y-m-d' }}</td>
-                        </tr>
+                {% for news in exp_people.list %}
+                    <tr style="height: 25px;">
+                        <td width="20px" align="center">{{ forloop.counter }}.</td>
+                        <td align="left"><a href="/newslook?news_id={{ news.id }}">{{ news.title }}</a></td>
+                        <td width="100px"  align="center">{{ news.updatetime|date:'Y-m-d' }}</td>
+                    </tr>
                 {% endfor %}
+                    <tr style="height: 25px;">
+                        <td width="20px" align="right" colspan="3"><a href="/newslist?column_id={{ exp_people.id }}">更多……</a></td>
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -138,7 +157,9 @@
                     <span  style="font: 9px;">[{{ work.updatetime|date:'Y-m-d' }}]</span></a>
                 </span>
             {% endfor %}
-
+            <span style="float: left;text-align: right;margin-bottom: 10px;margin-top: 5px;width: 100%;" class="btn">
+               <a href="/SearchPeople" target="_blank"><span>更多……</span></a>
+           </span>
         </div>
     </div>
 

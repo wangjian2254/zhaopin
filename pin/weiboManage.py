@@ -46,7 +46,7 @@ qqconsumer_secret='f373f4aa6389ba8e3b0eae209d655f68'
 #wywebtext=u'[来自 @这个生活就是个笑话 '+WEIBOURL+']'
 #tengwebtext=u'[来自 @jokeinlive '+WEIBOURL+']'
 
-
+'''
 class WebOAuthHandler(OAuthHandler):
     user_id=None
     def get_authorization_url_with_callback(self, callback, signin_with_twitter=False):
@@ -71,7 +71,7 @@ class WebOAuthHandler(OAuthHandler):
 def _oauth():
     """获取oauth认证类"""
     return WebOAuthHandler(xlconsumer_key, xlconsumer_secret)
-
+'''
 def setWeibo(request):
     content=request.GET.get("content","")
     if hasattr(request,'environ'):
