@@ -55,7 +55,7 @@ p{
 }
 .con_head{
     width: 1000px;
-    height: 250px;
+    overflow: hidden;
     background-color:#ffffff;
     text-align: center;
     margin-left:auto;

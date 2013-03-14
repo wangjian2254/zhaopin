@@ -17,7 +17,7 @@ from zhaopin.pin.models import JianLi, JiaoYu, WorkJingYan
 
 
 def index(request):
-    newzhiweilist=ZhiWei.objects.filter(ispub=True).order_by('-updatetime')[:10]
+    newzhiweilist=ZhiWei.objects.filter(ispub=True).order_by('-updatetime')[:13]
     newjianlilist=JianLi.objects.filter(ispub=True).order_by('-updatetime')[:10]
     responsedic={'newzhiweilist':newzhiweilist,'newjianlilist':newjianlilist}
     for column in Column.objects.all():
@@ -103,6 +103,8 @@ def toudijianli(request):
 
         worklook.updatetime=datetime.datetime.now()
         worklook.save()
+        zhiwei=ZhiWei.objects.get(pk=work_id)
+        ZhiWei.objects.filter(pk=work_id).update(looknum=zhiwei.looknum+1)
         return HttpResponse('{"success":true,"msg":"%s"}'%(u'提交简历完成。',))
     else:
         return HttpResponse('{"success":false,"msg":"%s"}'%(u'职位或者简历不存在。',))
@@ -303,6 +305,9 @@ def savejianli(request):
             jiaoyu.workcontent=jiaoyuworkcontent
         if jiaoyudateqj and jiaoyuworkcontent:
             jiaoyu.save()
+        if jiaoyuid and not (jiaoyudateqj or jiaoyuworkcontent):
+            jiaoyu.delete()
+            jiaoyu=JiaoYu()
         jiaoyulist.append(jiaoyu)
     worklist=[]
     for i in range(5):
@@ -326,6 +331,9 @@ def savejianli(request):
             work.workname=workworkname
         if workdateqj and workworkname and workworkcontent:
             work.save()
+        if workid and not (workdateqj or workworkname or workworkcontent):
+            work.delete()
+            work=WorkJingYan()
         worklist.append(work)
     request.session[RESULT]=SUCCESS
     request.session[MSG]=u'保存成功。'
