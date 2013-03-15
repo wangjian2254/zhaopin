@@ -7,15 +7,9 @@ import urllib
 import uuid
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
-from django.contrib.sites.models import Site
-
-from django.template.context import RequestContext
-
-from django.shortcuts import render_to_response
-from django.contrib.auth import authenticate
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import  HttpResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
-import ImageFile
+#import ImageFile
 import json
 #def imageUp(request):
 #    user=request.user
@@ -70,10 +64,10 @@ def imageUp(request):
     elif not isAllowSize(f.size,maxSize) :
         result['state']=errorInfo['SIZE']
     else:
-        parser=ImageFile.Parser()
-        for chunk in f.chunks():
-            parser.feed(chunk)
-        img=parser.close()
+#        parser=ImageFile.Parser()
+#        for chunk in f.chunks():
+#            parser.feed(chunk)
+#        img=parser.close()
         newfilename=''
         ufile=UeditorFile()
         try:
@@ -85,7 +79,11 @@ def imageUp(request):
             ufile.type='image'
             ufile.user=request.user
             ufile.save()
-            img.save(UPLOADDIR+newfilename)
+            fileatt=open(UPLOADDIR+newfilename,'wb+')
+            for chunk in f.chunks():
+                fileatt.write(chunk)
+            fileatt.close()
+#            img.save(UPLOADDIR+newfilename)
         except Exception,e:
             ufile.delete()
             result['state']=errorInfo['DIR']
@@ -95,6 +93,42 @@ def imageUp(request):
             result['title']=ufile.title
             result['url']=newfilename
     return HttpResponse(json.dumps(result))
+#
+#@login_required
+#@csrf_exempt
+#def imageUp(request):
+#    result=getResult()
+#    f=request.FILES[fieldname]
+#    if not isAllowFiles(f.name,imgtype):
+#        result['state']=errorInfo['TYPE']
+#    elif not isAllowSize(f.size,maxSize) :
+#        result['state']=errorInfo['SIZE']
+#    else:
+#        parser=ImageFile.Parser()
+#        for chunk in f.chunks():
+#            parser.feed(chunk)
+#        img=parser.close()
+#        newfilename=''
+#        ufile=UeditorFile()
+#        try:
+#            newfilename=getSaveName(UPLOADDIR,f.name)
+#            ufile.filename=f.name
+#            ufile.realfilename=newfilename
+#            ufile.size=f.size
+#            ufile.title=request.POST.get('pictitle','')
+#            ufile.type='image'
+#            ufile.user=request.user
+#            ufile.save()
+#            img.save(UPLOADDIR+newfilename)
+#        except Exception,e:
+#            ufile.delete()
+#            result['state']=errorInfo['DIR']
+#
+#        else:
+#            result['state']=errorInfo['SUCCESS']
+#            result['title']=ufile.title
+#            result['url']=newfilename
+#    return HttpResponse(json.dumps(result))
 
 
 @csrf_exempt
@@ -154,12 +188,12 @@ def getRemoteImage(request):
             continue
         fileuri=urllib.urlopen(uri)
         if fileuri.getcode()==200 and fileuri.headers.type.find('image')!=-1:
-            parser=ImageFile.Parser()
-            for chunk in fileuri.readlines():
-                parser.feed(chunk)
-            fileuri.close()
+#            parser=ImageFile.Parser()
+#            for chunk in fileuri.readlines():
+#                parser.feed(chunk)
+#            fileuri.close()
             size=int(fileuri.headers.dict['content-length'])
-            img=parser.close()
+#            img=parser.close()
             newfilename=''
             ufile=UeditorFile()
             try:
@@ -171,7 +205,12 @@ def getRemoteImage(request):
                 ufile.type='image'
                 ufile.user=request.user
                 ufile.save()
-                img.save(UPLOADDIR+newfilename)
+#                img.save(UPLOADDIR+newfilename)
+                fileatt=open(UPLOADDIR+newfilename,'wb+')
+                for chunk in fileuri.readlines():
+                    fileatt.write(chunk)
+                fileuri.close()
+                fileatt.close()
             except Exception,e:
                 ufile.delete()
                 result['state']=errorInfo['DIR']
