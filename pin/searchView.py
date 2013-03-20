@@ -24,7 +24,7 @@ def searchWork(request):
     query={'searchValue':searchValue.encode('utf-8'),'add':address.encode('utf-8'),'type':type.encode('utf-8')}
     querystr=urllib.urlencode(query)
 
-    zhiweiquery=ZhiWei.objects.filter(Q(zhiwei__contains=searchValue)|Q(desc__contains=searchValue))
+    zhiweiquery=ZhiWei.objects.filter(ispub=True).filter(Q(zhiwei__contains=searchValue)|Q(desc__contains=searchValue))
     #其他条件
     if address:
         zhiweiquery=zhiweiquery.filter(workadd__contains=address)
@@ -56,7 +56,7 @@ def searchPeople(request):
     query={'searchValue':searchValue.encode('utf-8'),'add':address.encode('utf-8'),'sex':sex,'age':age,'workage':workage,'zhuanye':zhuanye.encode('utf-8'),'xuewei':xuewei.encode('utf-8')}
     querystr=urllib.urlencode(query)
 
-    zhiweiquery=JianLi.objects.filter(Q(name__contains=searchValue)|Q(desc__contains=searchValue))
+    zhiweiquery=JianLi.objects.filter(ispub=True).filter(Q(name__contains=searchValue)|Q(desc__contains=searchValue))
     #其他条件
     if address:
         zhiweiquery=zhiweiquery.filter(workadd__contains=address)

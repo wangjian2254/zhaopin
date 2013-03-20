@@ -475,7 +475,7 @@ def companylook(request):
     closelist=ZhiWei.objects.filter(user=business.user).filter(ispub=False)
 
 
-    return render_to_response('businesslook.html',getSessionMsg(request,{'business':business,'list':list,'closelist':closelist}),RequestContext(request,{}))
+    return render_to_response('businesslook.html',getSessionMsg(request,{'business':business,'obj':business,'objtype':'business','list':list,'closelist':closelist}),RequestContext(request,{}))
 
 
 @login_required
