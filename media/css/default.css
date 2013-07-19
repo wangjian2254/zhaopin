@@ -83,6 +83,7 @@ p{
 }
 .con_c_right{
     width: 200px;
+    text-align: center;
     float: right;
 }
 .con_c_menu_left{

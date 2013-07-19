@@ -142,7 +142,7 @@ def jianlilist(request):
 
 def lookjianli(request):
     '''
-    简历列表界面
+    简历界面
     '''
     jianliid=request.GET.get('jianli_id','')
     jiaoyulist=[]
@@ -169,7 +169,8 @@ def lookjianli(request):
     else:
         request.session[RESULT]=WARN
         request.session[MSG]=u'操作失败，未找到简历，或简历已经被删除。'
-    return render_to_response('jianlilook.html',getSessionMsg(request,{'obj':jianli,'objtype':'jianli','jiaoyulist':jiaoyulist,'worklist':worklist}),RequestContext(request,{}))
+    return render_to_response('jianlilook.html',getSessionMsg(request,{'obj':jianli,
+                                                'objtype':'jianli','jiaoyulist':jiaoyulist,'worklist':worklist}),RequestContext(request,{}))
 
 
 

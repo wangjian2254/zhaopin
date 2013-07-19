@@ -53,7 +53,8 @@ def searchPeople(request):
     workage=request.REQUEST.get('workage','')
     zhuanye=request.REQUEST.get('zhuanye','')
     xuewei=request.REQUEST.get('xuewei','')
-    query={'searchValue':searchValue.encode('utf-8'),'add':address.encode('utf-8'),'sex':sex,'age':age,'workage':workage,'zhuanye':zhuanye.encode('utf-8'),'xuewei':xuewei.encode('utf-8')}
+    query={'searchValue':searchValue.encode('utf-8'),
+           'add':address.encode('utf-8'),'sex':sex,'age':age,'workage':workage,'zhuanye':zhuanye.encode('utf-8'),'xuewei':xuewei.encode('utf-8')}
     querystr=urllib.urlencode(query)
 
     zhiweiquery=JianLi.objects.filter(ispub=True).filter(Q(name__contains=searchValue)|Q(desc__contains=searchValue))
@@ -79,4 +80,5 @@ def searchPeople(request):
         zhiweiquery=[]
     page=Paginator(zhiweiquery,limit)
     currentpage=page.page(start)
-    return render_to_response('searchPeople.html',getSessionMsg(request,{'querystr':querystr,'pam':request.REQUEST,'start':start,'limit':limit,'page':page,'currentpage':currentpage}),RequestContext(request,{}))
+    return render_to_response('searchPeople.html',getSessionMsg(request,
+            {'querystr':querystr,'pam':request.REQUEST,'start':start,'limit':limit,'page':page,'currentpage':currentpage}),RequestContext(request,{}))
